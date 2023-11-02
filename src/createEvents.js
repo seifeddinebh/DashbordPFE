@@ -19,10 +19,10 @@ function CreateEvent() {
     const [periode, setPeriode] = useState("")
     const [budgetevent, setBudgetevent] = useState("")
     const [price, setPrice] = useState("")
-    const [equipement, setEquipement] = useState("")
+    const [equipement, setEquipement] = useState([])
     const [tags, setTags] = useState([])
-    const [organizer, setOrganizer] = useState([])
-    const [category, setCategory] = useState([])
+    const [organizer, setOrganizer] = useState("")
+    const [category, setCategory] = useState("")
     const [selectedOptions, setSelectedOptions] = useState();
 
     const [dispoListEvents, setdispoListEvents] = useState([]);
@@ -37,6 +37,7 @@ function CreateEvent() {
         setPhoto(event.target.files[0]);
     };
     const optionList = [
+        { value: "", label: "Color" },
         { value: "red", label: "Red" },
         { value: "green", label: "Green" },
         { value: "yellow", label: "Yellow" },
@@ -47,7 +48,7 @@ function CreateEvent() {
     const ES = new EventService();
     const US = new UserService();
     const CS = new CategorieService();
-
+    let array = []
     const SignInFunction = (e) => {
         e.preventDefault();
 
@@ -76,6 +77,8 @@ function CreateEvent() {
         ES.create(formData).then((res) => {
             console.log(res.data.data)
         })
+
+
         navigate("/events")
     }
 
@@ -116,8 +119,25 @@ function CreateEvent() {
 
     function handleSelect(data) {
         setSelectedOptions(data);
+        console.log("***selectedOptions value****", selectedOptions)
+
+        selectedOptions.map((ones) => { array.push(ones.value) })
+        // setEquipement(data)
+
+        console.log("liste des array", array);
+        //var C1= "tttttt,555,jjj,oooo";
+        var C1 = array.toString()
+        let t = C1.split(",");
+        console.log("***********t******", t);
+        setEquipement(t)
+        console.log("liste des equipement", t);
     }
 
+
+    function GetTags() {
+
+
+    }
 
 
 
@@ -448,8 +468,9 @@ function CreateEvent() {
 
                                                                             placeholder="Your Tags..."
                                                                             required=""
-                                                                            value={equipement}
-                                                                            onChange={(e) => setTags(e.target.value)}
+                                                                            value={tags}
+                                                                            // onChange={(e) => setTags(e.target.value)}
+                                                                            onChange={e => GetTags(e)}
 
                                                                         />
                                                                     </fieldset>
@@ -531,17 +552,17 @@ function CreateEvent() {
 
                                                                 </div>
                                                                 <div className="col-lg-6">
-                                                                        <fieldset>
+                                                                    <fieldset>
 
-                                                                <Select
-                                                                    options={optionList}
-                                                                    placeholder="Select color"
-                                                                    value={selectedOptions}
-                                                                    onChange={handleSelect}
-                                                                    isSearchable={true}
-                                                                    isMulti
-                                                                />
-                                                                </fieldset>
+                                                                        <Select
+                                                                            options={optionList}
+                                                                            placeholder="Select color"
+                                                                            value={selectedOptions}
+                                                                            onChange={handleSelect}
+                                                                            // isSearchable={true}
+                                                                            isMulti
+                                                                        />
+                                                                    </fieldset>
                                                                 </div>
                                                                 <div className="col-lg-12">
                                                                     <br></br>
