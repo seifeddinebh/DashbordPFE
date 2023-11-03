@@ -8,7 +8,11 @@ import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 
 function CreateEvent() {
+    let nextId = 0;
 
+  
+      const [name1, setName1] = useState('');
+      const [artists, setArtists] = useState([]);
     const [events, setEvents] = useState("");
     const [id, setId] = useState("")
     const [name, setName] = useState("")
@@ -33,6 +37,7 @@ function CreateEvent() {
     const [query3, setquery3] = useState("")
     const [x, setX] = useState("")//recuperation de id organizer à partir de son nom dans liste deroulante
     const [y, setY] = useState("")/// recuperation de id category
+    const [t, sett] = useState([])
     const onFileChange = event => {
         setPhoto(event.target.files[0]);
     };
@@ -63,7 +68,7 @@ function CreateEvent() {
         formData.append("localisation", localisation)
         formData.append("periode", periode)
         formData.append("price", price)
-        formData.append("equipement", equipement)
+        formData.append("equipement", t)
         formData.append("tags", query1)
         formData.append("organizer", x)
         formData.append("category", y)
@@ -119,18 +124,20 @@ function CreateEvent() {
 
     function handleSelect(data) {
         setSelectedOptions(data);
-        console.log("***selectedOptions value****", selectedOptions)
+        //  console.log("***selectedOptions value****", selectedOptions)
 
         selectedOptions.map((ones) => { array.push(ones.value) })
         // setEquipement(data)
 
         console.log("liste des array", array);
+        console.log("type of array", typeof (array.toString));
+        console.log("to string array", array.toString);
         //var C1= "tttttt,555,jjj,oooo";
         var C1 = array.toString()
-        let t = C1.split(",");
-        console.log("***********t******", t);
-        setEquipement(t)
-        console.log("liste des equipement", t);
+        let chaine = C1.split(",");
+        sett(chaine);
+        console.log("***********t******", t.split(","));
+
     }
 
 
@@ -573,7 +580,21 @@ function CreateEvent() {
                                                                     </fieldset>
                                                                 </div>
                                                             </div>
-                                                            {/* </div> */}
+                                                            <input
+        value={name1}
+        onChange={e => setName1(e.target.value)}
+      />
+      <button onClick={() => {
+        setArtists([
+          ...artists,
+          { id: nextId++, name: name1 }
+        ]);
+      }}>Add</button>
+      <ul>
+        {artists.map(artist => (
+          <li key={artist.id}>{artist.name1}</li>
+        ))}
+      </ul>
                                                         </form>
                                                     </div>
                                                 </div>

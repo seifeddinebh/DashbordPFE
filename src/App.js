@@ -15,6 +15,7 @@ import CreateCategorie from './createCategorie';
 import EditCategorie from './editCategorie';
 import AddEvent from './AddEvent';
 import CreateEvent from './createEvents';
+import AfficheEvent from './AfficheEvent';
 
 
 
@@ -46,8 +47,9 @@ function App() {
           <Route path="/detailsCategorie/:id" element={<DetailsCategorie />} />
           <Route path="/createCategorie" element={<CreateCategorie />} />
           <Route path="/editCategorie/:id" element={<EditCategorie />} />
-          <Route path="/AddEvent/:id" element={<AddEvent />} />
+          <Route path="/AddEvent" element={<AddEvent />} />
           <Route path="/createEvent" element={<CreateEvent />} />
+          <Route path="/afficheEvent/:id" element={<AfficheEvent />} />
 
 
 
