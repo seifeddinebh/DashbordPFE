@@ -45,7 +45,8 @@ function Navbar() {
                 <li className="nav-item">
                     <a className="nav-link" href="index.html">
                         <i className="mdi mdi-compass-outline menu-icon"></i>
-                        <span className="menu-title">Dashboard</span>
+                        {/* <span className="menu-title">Dashboard</span> */}
+                        <li><Link to="/">Dashboard</Link></li>
                     </a>
                 </li>
 

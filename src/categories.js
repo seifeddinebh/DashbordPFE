@@ -12,6 +12,27 @@ function Categories() {
     const navigate = useNavigate()
 
 
+
+
+    const CreatePage = () => {
+        alert("Vers Create Page")
+        //navigation vers la page eventdaetail/id
+        navigate("/createUser")
+    }
+
+    const CreateCategorie = () => {
+        alert("Vers Create Create Categorie")
+        //navigation vers la page eventdaetail/id
+        navigate("/createCategorie")
+    }
+
+    const CreateEvent = () => {
+        alert("Vers Create Create Event")
+        //navigation vers la page eventdaetail/id
+        navigate("/createEvent")
+    }
+
+
     const CS = new CategorieService();
     const [categories, setCategories] = useState([])
 
@@ -245,9 +266,10 @@ function Categories() {
                     <div className="content-wrapper pb-0">
                         <div className="page-header flex-wrap">
                             <div className="header-left">
-                                <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new User </button>
-                                <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new Categorie </button>
-                                <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new Event </button>
+                                <button className="btn btn-primary mb-2 mb-md-0 me-2" onClick={(e) => CreatePage()}> Create new User </button>
+                                <button className="btn btn-primary mb-2 mb-md-0 me-2" onClick={(e) => CreateCategorie()}> Create new Categorie </button>
+                                <button className="btn btn-primary mb-2 mb-md-0 me-2" onClick={(e) => CreateEvent()}> Create new Event </button>
+
 
                             </div>
 

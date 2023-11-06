@@ -10,12 +10,17 @@ import Select from "react-select";
 function CreateEvent() {
     let nextId = 0;
 
-  
-      const [name1, setName1] = useState('');
-      const [artists, setArtists] = useState([]);
+
+    const [namevent, setNamevent] = useState('');
+    const [chaine, setChaine] = useState('');
+    const [artists1, setArtists1] = useState([]);
+    const [artists, setArtists] = useState([]);
+    const [array1, setarray1] = useState([]);
+    const [array2, setarray2] = useState([]);
     const [events, setEvents] = useState("");
     const [id, setId] = useState("")
     const [name, setName] = useState("")
+    const [name1, setName1] = useState("")
     const [description, setDescription] = useState("")
     const [photo, setPhoto] = useState("")
     const [file, setFile] = useState("")
@@ -57,10 +62,27 @@ function CreateEvent() {
     const SignInFunction = (e) => {
         e.preventDefault();
 
+        { //adaptation de liste des tag dans tableau array2
+            artists.map((ar) => {
+                array2.push(ar.name)
+            })
+            var C1 = array2.toString()
+            let chaine = C1.split(",");
+            console.log("chaine", chaine)
+            setTags(chaine)
+            //adaptation de liste des equipement dans tableau array1
+            artists1.map((ar1) => {
+                array1.push(ar1.name)
+            })
+        }
 
+        console.log("tags", tags)
+        setEquipement(array1)
+        console.log("equipement", equipement)
         //alert(query1)
         const formData = new FormData();
-        formData.append("name", name)
+        formData.append("namevent", namevent)
+
         formData.append("description", description)
         formData.append("budgetevent", budgetevent)
         formData.append("photo", photo)
@@ -68,13 +90,10 @@ function CreateEvent() {
         formData.append("localisation", localisation)
         formData.append("periode", periode)
         formData.append("price", price)
-        formData.append("equipement", t)
-        formData.append("tags", query1)
+        formData.append("equipement", array1)
+        formData.append("tags", tags)
         formData.append("organizer", x)
         formData.append("category", y)
-
-
-
 
 
 
@@ -366,8 +385,8 @@ function CreateEvent() {
                                                                             name="name" id="name"
                                                                             placeholder="Your  Name..."
                                                                             autocomplete="on" required
-                                                                            value={name}
-                                                                            onChange={(e) => setName(e.target.value)}
+                                                                            value={namevent}
+                                                                            onChange={(e) => setNamevent(e.target.value)}
                                                                         />
                                                                     </fieldset>
                                                                 </div>
@@ -453,7 +472,7 @@ function CreateEvent() {
                                                                         />
                                                                     </fieldset>
                                                                 </div>
-                                                                <div className="col-lg-6">
+                                                                {/* <div className="col-lg-6">
                                                                     <fieldset>
                                                                         <input type="text"
                                                                             name="email"
@@ -466,22 +485,8 @@ function CreateEvent() {
 
                                                                         />
                                                                     </fieldset>
-                                                                </div>
-                                                                <div className="col-lg-6">
-                                                                    <fieldset>
-                                                                        <input type="text"
-                                                                            name="email"
-                                                                            id="email"
+                                                                </div> */}
 
-                                                                            placeholder="Your Tags..."
-                                                                            required=""
-                                                                            value={tags}
-                                                                            // onChange={(e) => setTags(e.target.value)}
-                                                                            onChange={e => GetTags(e)}
-
-                                                                        />
-                                                                    </fieldset>
-                                                                </div>
                                                                 <br></br>
 
 
@@ -558,43 +563,67 @@ function CreateEvent() {
                                                                     </div>
 
                                                                 </div>
-                                                                <div className="col-lg-6">
-                                                                    <fieldset>
 
-                                                                        <Select
-                                                                            options={optionList}
-                                                                            placeholder="Select color"
-                                                                            value={selectedOptions}
-                                                                            onChange={handleSelect}
-                                                                            // isSearchable={true}
-                                                                            isMulti
-                                                                        />
-                                                                    </fieldset>
-                                                                </div>
-                                                                <div className="col-lg-12">
-                                                                    <br></br>
-                                                                    <br></br>
-
-                                                                    <fieldset>
-                                                                        <button onClick={(e) => SignInFunction(e)} type="submit" id="form-submit" className="orange-button"> Create</button>
-                                                                    </fieldset>
-                                                                </div>
                                                             </div>
+                                                            <br></br><br></br>
+                                                            <label for="cars">Tags:</label>
+                                                            <br></br>
                                                             <input
-        value={name1}
-        onChange={e => setName1(e.target.value)}
-      />
-      <button onClick={() => {
-        setArtists([
-          ...artists,
-          { id: nextId++, name: name1 }
-        ]);
-      }}>Add</button>
-      <ul>
-        {artists.map(artist => (
-          <li key={artist.id}>{artist.name1}</li>
-        ))}
-      </ul>
+                                                                value={name}
+                                                                onChange={e => setName(e.target.value)}
+                                                            />
+                                                            <button onClick={(e) => {
+                                                                e.preventDefault();
+                                                                setArtists([
+                                                                    ...artists,
+                                                                    { id: nextId++, name: name }
+
+                                                                ]);
+                                                                console.log("artists", artists)
+
+
+                                                            }}>Add other tag</button>
+                                                            <ul>
+                                                                {artists.map(artist =>
+                                                                    (<li key={artist.id}>{artist.name}</li>)
+                                                                )
+                                                                }
+                                                            </ul>
+
+                                                            <br></br><br></br>
+                                                            <label for="cars">Equipements:</label>
+                                                            <br></br>
+                                                            <input
+                                                                value={name1}
+                                                                onChange={e => setName1(e.target.value)}
+                                                            />
+                                                            <button onClick={(e) => {
+                                                                e.preventDefault();
+                                                                setArtists1([
+                                                                    ...artists1,
+                                                                    { id: nextId++, name: name1 }
+
+                                                                ]);
+                                                                console.log("equipement", artists1)
+
+
+                                                            }}>Add other equipement</button>
+                                                            <ul>
+                                                                {artists1.map(artist1 =>
+                                                                    (<li key={artist1.id}>{artist1.name}</li>)
+                                                                )
+                                                                }
+                                                            </ul>
+                                                            <div className="col-lg-12">
+                                                                <br></br>
+                                                                <br></br>
+
+                                                                <fieldset>
+                                                                    <button onClick={(e) => SignInFunction(e)} id="form-submit" className="orange-button"> Create</button>
+                                                                </fieldset>
+                                                            </div>
+
+
                                                         </form>
                                                     </div>
                                                 </div>
