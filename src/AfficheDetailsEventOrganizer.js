@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 
 
 
-function AfficheEvent() {
+function AfficheDetailsEventOrganizer() {
 
     const location = useLocation()
     //const CS = new CategorieService();
@@ -350,4 +350,4 @@ function AfficheEvent() {
     )
 }
 
-export default AfficheEvent
+export default AfficheDetailsEventOrganizer

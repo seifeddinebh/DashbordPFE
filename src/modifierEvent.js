@@ -4,13 +4,17 @@ import Navbar from "./navbar";
 import CategorieService from "./services/CategorieService";
 import EventService from "./services/EventService";
 import UserService from "./services/UserService"
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Select from "react-select";
+import Swal from "sweetalert2"
 
-function CreateEvent() {
+function ModifierEvent() {
+
+
+    const [id, setid] = useState("")
+    const location = useLocation()
+    //*********************************************** */
     let nextId = 0;
-
-
     const [namevent, setNamevent] = useState('');
     const [chaine, setChaine] = useState('');
     const [artists1, setArtists1] = useState([]);
@@ -18,7 +22,7 @@ function CreateEvent() {
     const [array1, setarray1] = useState([]);
     const [array2, setarray2] = useState([]);
     const [events, setEvents] = useState("");
-    const [id, setId] = useState("")
+
     const [name, setName] = useState("")
     const [name1, setName1] = useState("")
     const [description, setDescription] = useState("")
@@ -79,7 +83,7 @@ function CreateEvent() {
 
         //alert(query1)
         const formData = new FormData();
-        formData.append("namevent", namevent)
+        formData.append("name", namevent)
 
         formData.append("description", description)
         formData.append("budgetevent", budgetevent)
@@ -96,9 +100,16 @@ function CreateEvent() {
 
 
 
-        ES.create(formData).then((res) => {
-            console.log(res.data.data)
+        // ES.create(formData).then((res) => {
+        //     console.log(res.data.data)
+        // })
+        ES.update(id, formData).then((res) => {
+            // console.log("Ok")
+            Swal.fire('The profile is updated!');
+
         })
+
+
 
 
         navigate("/events")
@@ -123,7 +134,8 @@ function CreateEvent() {
     }
     useEffect(() => {
 
-
+        setid(location.state.id)
+        OneEventFunction(location.state.id)
         US.getOrganiser().then((res) => {
 
             console.log("Liste des Users ", res.data.data);
@@ -139,28 +151,21 @@ function CreateEvent() {
 
     }, [])
 
-    function handleSelect(data) {
-        setSelectedOptions(data);
-        //  console.log("***selectedOptions value****", selectedOptions)
-
-        selectedOptions.map((ones) => { array.push(ones.value) })
-        // setEquipement(data)
-
-        console.log("liste des array", array);
-        console.log("type of array", typeof (array.toString));
-        console.log("to string array", array.toString);
-        //var C1= "tttttt,555,jjj,oooo";
-        var C1 = array.toString()
-        let chaine = C1.split(",");
-        sett(chaine);
-        console.log("***********t******", t.split(","));
-
-    }
+    const OneEventFunction = (id) => {
+        ES.GetOne(id).then((res) => {
+            console.log("one event ", res.data.data)
+            setNamevent(res.data.data.name)
+            setDescription(res.data.data.description)
+            setBudgetevent(res.data.data.price)
+            setLocalisation(res.data.data.localisation)
+            setPeriode(res.data.data.periode)
+            setTags(res.data.data.tags)
+            setEquipement(res.data.data.equipement)
+            setOrganizer(res.data.data.organizer)
+            setCategory(res.data.data.category)
 
 
-    function GetTags() {
-
-
+        })
     }
 
 
@@ -396,8 +401,8 @@ function CreateEvent() {
                                                                             id="surname"
                                                                             placeholder="Your budget..."
                                                                             autocomplete="on" required
-                                                                            value={budgetevent}
-                                                                            onChange={(e) => setBudgetevent(e.target.value)}
+                                                                            value={price}
+                                                                            onChange={(e) => setPrice(e.target.value)}
 
                                                                         />
                                                                     </fieldset>
@@ -524,13 +529,16 @@ function CreateEvent() {
                                                                         <fieldset>
 
 
-                                                                            <label for="cars">Organizer:</label>
+                                                                            <label for="cars"> the actual Organizer:</label>
+                                                                            &nbsp;&nbsp;&nbsp;
+                                                                            <label for="cars">{organizer.firstname}</label>
 
                                                                             <br></br>
                                                                             <br></br>
 
-                                                                            <select style={{ backgroundColor: "white", borderRadius: "12%" }} id="cars" onChange={e => onChangeHandler1(e)} >
+                                                                            <select defaultValue={"select one"} style={{ backgroundColor: "white", borderRadius: "12%" }} id="cars" onChange={e => onChangeHandler1(e)} >
                                                                                 {dispoListusers.map((dispo1) => (
+
                                                                                     <option id={dispo1._id}> {dispo1.firstname}</option>
                                                                                 ))}
                                                                             </select>
@@ -545,7 +553,10 @@ function CreateEvent() {
                                                                         <fieldset>
 
 
-                                                                            <label for="cars">Categories:</label>
+                                                                            <label for="cars">the actual Categories:</label>
+                                                                            &nbsp;&nbsp;&nbsp;
+                                                                            <label for="cars">{category.name}</label>
+
 
                                                                             <br></br>
                                                                             <br></br>
@@ -564,7 +575,9 @@ function CreateEvent() {
 
                                                             </div>
                                                             <br></br><br></br>
-                                                            <label for="cars">Tags:</label>
+                                                            <label for="cars">the actual Tags:</label>
+                                                            &nbsp;&nbsp;&nbsp;
+                                                            <label for="cars">{tags}</label>
                                                             <br></br>
                                                             <input
                                                                 value={name}
@@ -589,7 +602,9 @@ function CreateEvent() {
                                                             </ul>
 
                                                             <br></br><br></br>
-                                                            <label for="cars">Equipements:</label>
+                                                            <label for="cars">the actual Equipements:</label>
+                                                            &nbsp;&nbsp;&nbsp;
+                                                            <label for="cars">{equipement}</label>
                                                             <br></br>
                                                             <input
                                                                 value={name1}
@@ -650,4 +665,4 @@ function CreateEvent() {
 
     )
 }
-export default CreateEvent
+export default ModifierEvent

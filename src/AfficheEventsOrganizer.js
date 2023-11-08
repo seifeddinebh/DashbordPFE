@@ -1,131 +1,83 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Footer from "./footer";
 import Navbar from "./navbar";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react";
+import EventService from "./services/EventService"
+import { useNavigate } from "react-router-dom";
 
-import CategorieService from "./services/CategorieService";
-import EventService from "./services/EventService";
-import Swal from "sweetalert2";
+function AfficheEventOrganizer() {
 
 
-
-function AfficheEvent() {
-
-    const location = useLocation()
-    //const CS = new CategorieService();
     const ES = new EventService();
+    //const [services, setServices] = useState([])
+    const [events, setEvents] = useState([])
     const navigate = useNavigate();
 
-    const [events, setEvents] = useState("");
-    const [id, setId] = useState("")
-    const [name, setName] = useState("")
-    const [description, setDescription] = useState("")
-    const [photo, setPhoto] = useState("")
-    const [file, setFile] = useState("")
-    const [localisation, setlocalisation] = useState("")
-    const [periode, setPeriode] = useState("")
-    const [budgetevent, setBudgetevent] = useState("")
-    const [price, setPrice] = useState("")
-    const [equipement, setEquipement] = useState([])
-    const [tags, setTags] = useState([])
-    const [organizer, setOrganizer] = useState([])
-    const [category, setCategory] = useState([])
-    const [selectedOptions, setSelectedOptions] = useState();
-    // const [ListOfOrganizer,setListOfOrganizer]=useState([])
-    const onFileChange = event => {
-        setPhoto(events.target.files[0]);
-    };
-
-
-    useEffect(() => {// Reexpliquer
-        console.log("ok id ", location.state.id);
-        setId(location.state.id);//??
-        getEventById(location.state.id);//?? name(x) name(saif)
-
-
-    }, []);
-
-    const getEventById = (id) => {
-        console.log("id", id);
-        if (id != null) {
-            ES.GetOne(id).then((res) => {
-                //
-                console.log("detailss", res.data.data);
-                if (res.data.data) {
-                    setEvents(res.data.data);
-
-                    setName(res.data.data.name);
-                    setDescription(res.data.data.description);
-                    setBudgetevent(res.data.data.budgetevent)
-                    setPhoto(res.data.data.photo);
-                    setFile(res.data.data.file);
-                    setPeriode(res.data.data.periode);
-                    setBudgetevent(res.data.data.budgetevent)
-                    setPrice(res.data.data.price);
-                    setlocalisation(res.data.data.localisation)
-
-                    setEquipement(res.data.data.equipement);// Affichage ??
-                    setTags(res.data.data.tags)// Affichage ??
-
-                    setOrganizer(res.data.data.organizer)
-                    setCategory(res.data.data.category)
 
 
 
-
-
-
-
-                }
-
-            })
-        }
-
-        //  else { navigate("/login") }
-    }
-    const Modifier = (id) => {
-        alert("Vers Create Modifier")
+    const CreatePage = () => {
+        alert("Vers Create Page")
         //navigation vers la page eventdaetail/id
-        navigate("/modifierEvent/" + id, { state: { id: id } })
+        navigate("/createUser")
     }
 
-    const Supprimer = (id) => {
-        console.log("ok supprimer", id);
-        Swal.fire({
-            title: "Vous-êtez sûr??",
-            text: "Vous ne pourrez pas revenir en arrière!",
-            icon: "avertissement",
-            showCancelButton: true,
-            confirmButtonColor: "#3085D6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Oui, supprimez-le!",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                ES.remove(id).then((res) => {
-                    console.log(res.status);
-                    console.log("resposne", res);
-                    if (res.status === 200) {
-                        navigate(-1)
-                        Swal.fire("Supprimé!", "Votre fichier a été supprimé.", "Succès");
-                    }
-                });
-            }
-        });
-    };
+    const CreateCategorie = () => {
+        alert("Vers Create Create Categorie")
+        //navigation vers la page eventdaetail/id
+        navigate("/createCategorie")
+    }
+
+    const CreateEvent = () => {
+        alert("Vers Create Create Event")
+        //navigation vers la page eventdaetail/id
+        navigate("/createEvent")
+    }
 
 
+    useEffect(() => {
 
+        AllEvents()
+
+    }, [])
+    const AllEvents = () => {
+        ES.getAll().then((res) => {
+
+            console.log("Liste des events ", res.data.data);
+            setEvents(res.data.data);
+
+        })
+    }
+
+    const detialFN = (id) => {
+        navigate("/afficheEvent/" + id, { state: { id: id } })
+    }
 
     return (
 
 
         <div className="container-scroller">
+            {/* <div className="row p-0 m-0 proBanner" id="proBanner">
+                <div className="col-md-12 p-0 m-0">
+                    <div className="card-body card-body-padding d-flex align-items-center justify-content-between">
+                        <div className="ps-lg-1">
+                            <div className="d-flex align-items-center justify-content-between">
+                                <p className="mb-0 font-weight-medium me-3 buy-now-text">Free 24/7 customer support, updates, and more with
+                                    this template!</p>
+                                <a href="https://www.bootstrapdash.com/product/plus-admin-template/?utm_source=organic&utm_medium=banner&utm_campaign=buynow_demo"
+                                    target="_blank" className="btn me-2 buy-now-btn border-0">Get Pro</a>
+                            </div>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-between">
+                            <a href="https://www.bootstrapdash.com/product/plus-admin-template/"><i
+                                className="mdi mdi-home me-3 text-white"></i></a>
+                            <button id="bannerClose" className="btn border-0 p-0">
+                                <i className="mdi mdi-close text-white me-0"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div> */}
 
-
-            <Navbar />
-            <br></br>
 
             <div className="container-fluid page-body-wrapper">
 
@@ -157,9 +109,8 @@ function AfficheEvent() {
                             <span className="mdi mdi-chevron-double-left"></span>
                         </button>
                         <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                            <a className="navbar-brand brand-logo-mini" href="index.html">
-                                <img src="../assets/images/logo-mini.svg"
-                                    alt="logo" /></a>
+                            <a className="navbar-brand brand-logo-mini" href="index.html"><img src="../assets/images/logo-mini.svg"
+                                alt="logo" /></a>
                         </div>
                         <ul className="navbar-nav">
                             <li className="nav-item dropdown">
@@ -289,65 +240,63 @@ function AfficheEvent() {
                         </button>
                     </div>
                 </nav>
-                <br></br><br></br>
-                <br></br><br></br>
-                <br></br><br></br>
+
                 <div className="main-panel">
-                    <div class="row">
-                        <div class="col-lg-6 offset-3">
-                            <div class="card mb-5">
-                                <div class="card-body text-center">
+                    <div className="content-wrapper pb-0">
+                        <div className="page-header flex-wrap">
+                            <div className="header-left">
 
+                                <button className="btn btn-primary mb-2 mb-md-0 me-2" onClick={(e) => CreateEvent()}> Create new Event </button>
 
-
-                                    <img src={`http://localhost:3000/storages/${events.photo}`} alt="" />
-                                    <h5 class="my-3">{name}</h5>
-                                    <p class="text-muted mb-1">{budgetevent}</p>
-                                    <p class="text-muted mb-1">{description}</p>
-
-                                    <p class="text-muted mb-1">localisation:{localisation}</p>
-                                    <p class="text-muted mb-1">Periode :{periode}</p>
-
-                                    <p class="text-muted mb-1">Price: {price}</p>
-
-                                    <p class="text-muted mb-1">List des Equipements{equipement.map((Eqp) => (
-                                        <li key={Eqp._id}> {Eqp}</li>
-                                    ))}</p>
-
-                                    <p class="text-muted mb-1"> List Des Tags{tags.map((Tags) => (
-                                        <li key={Tags._id}> {Tags}</li>
-                                    ))}</p>
-
-
-                                    <p class="text-muted mb-1">
-                                        Organizer: {organizer.firstname}
-                                    </p>
-                                    <p class="text-muted mb-1">
-                                        Categorie: {category.name}
-                                    </p>
-
-
-
-
-
-                                </div>
-                                <br></br>
-                                <button type="button" class="btn btn-danger" onClick={(e) => Supprimer(id)}>Delete</button>
-                                <br></br>
-                                <button type="button" class="btn btn-primary" onClick={(e) => Modifier(id)}>UpDate</button>
-                                <br></br>
-                                <button type="button" class="btn btn-success" onClick={(e) => navigate("/events")}>Back</button>
                             </div>
-
 
                         </div>
 
+
+
+                        {events.map((event) => (
+
+                            <div style={{ display: "inline-flex" }}>
+
+                                <div className="col-lg-12 stretch-card grid-margin">
+                                    <div className="card" onClick={e => { detialFN(event._id) }}>
+                                        <div className="card-body p-0">
+                                            <img src={`http://localhost:3000/storages/${event.photo}`} width="300" alt="" />
+                                        </div>
+                                        <div className="card-body px-4 text-dark">
+                                            <div className="d-flex justify-content-between">
+                                                <p className="text-muted font-13 mb-0">{event.name}</p>
+                                                <i className="mdi mdi-heart-outline"></i>
+                                            </div>
+                                            <h5 className="font-weight-semibold">{event.description}  </h5>
+                                            <div className="d-flex justify-content-between font-weight-semibold">
+                                                <p className="mb-0">
+                                                    <i className="mdi mdi-star star-color pe-1"></i>{event.localisation} (35)
+                                                </p>
+                                                <p className="mb-0">{event.budget}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+
+
+
+
                     </div>
+
+                    <Footer />
+
                 </div>
 
-            </div >
+            </div>
+
         </div>
+
     )
+
+
 }
 
-export default AfficheEvent
+export default AfficheEventOrganizer;

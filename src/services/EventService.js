@@ -30,7 +30,7 @@ export default class EventService {
     }
     GetOne(id) {
 
-        // console.log("liste des users")
+        console.log("one event")
         return http.get("/Event/GetOne/" + id);
 
     }

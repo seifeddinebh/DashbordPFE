@@ -16,6 +16,13 @@ import EditCategorie from './editCategorie';
 import AddEvent from './AddEvent';
 import CreateEvent from './createEvents';
 import AfficheEvent from './AfficheEvent';
+import ModifierEvent from './modifierEvent';
+import Login from './login';
+import Register from './register';
+import DashboardOrganisateur from './DashbordOrganisateur';
+import CreateEventOrganisateur from './createEventOrganisateur';
+import AfficheEventOrganizer from './AfficheEventsOrganizer';
+import AfficheDetailsEventOrganizer from './AfficheDetailsEventOrganizer';
 
 
 
@@ -31,11 +38,18 @@ function App() {
     <Fragment>
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Login />} />
+          {/* <Route path="/" element={<Home />} /> */}
           {/* <Route path="/contact" element={<Contact />} />
        
-          <Route path="/home" element={<Home />} />
+         
           */}
+          <Route path="/home" element={<Home />} />
+          <Route path="/Dashbodorganisateur" element={<DashboardOrganisateur />} />
+          <Route path="/cerateEventOrganisateur" element={<CreateEventOrganisateur />} />
+          <Route path="/AfficheEventOrganizer" element={<AfficheEventOrganizer />} />
+          *<Route path="/AfficheDetailsEventOrganizer" element={<AfficheDetailsEventOrganizer />} />
+
           <Route path="/events" element={<Events />} />
           <Route path="/categories" element={<Categories />} />
           <Route path="/users" element={<Users />} />
@@ -50,6 +64,9 @@ function App() {
           <Route path="/AddEvent" element={<AddEvent />} />
           <Route path="/createEvent" element={<CreateEvent />} />
           <Route path="/afficheEvent/:id" element={<AfficheEvent />} />
+          <Route path="/modifierEvent/:id" element={<ModifierEvent />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
 
 

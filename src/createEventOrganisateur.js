@@ -7,7 +7,7 @@ import UserService from "./services/UserService"
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 
-function CreateEvent() {
+function CreateEventOrganisateur() {
     let nextId = 0;
 
 
@@ -90,7 +90,7 @@ function CreateEvent() {
         formData.append("price", price)
         formData.append("equipement", array1)
         formData.append("tags", array2)
-        formData.append("organizer", x)
+        formData.append("organizer", localStorage.getItem("resultID"))
         formData.append("category", y)
 
 
@@ -176,7 +176,7 @@ function CreateEvent() {
         <div className="container-scroller">
 
 
-            <Navbar />
+
 
             <div className="container-fluid page-body-wrapper">
 
@@ -303,7 +303,7 @@ function CreateEvent() {
                         </ul>
                         <ul className="navbar-nav navbar-nav-right">
                             <li className="nav-item nav-logout d-none d-md-block me-3">
-                                <a className="nav-link" href="#">Status</a>
+                                <a className="nav-link" href="#">Dashbord Organisateur</a>
                             </li>
                             <li className="nav-item nav-logout d-none d-md-block">
                                 <button className="btn btn-sm btn-danger">Trailing</button>
@@ -344,8 +344,8 @@ function CreateEvent() {
                     <div className="content-wrapper pb-0">
                         <div className="page-header flex-wrap">
                             <div className="header-left">
-                                <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new User </button>
-                                <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new Categorie </button>
+
+                                {/* <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new Categorie </button> */}
                                 <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new Event </button>
 
                             </div>
@@ -370,13 +370,21 @@ function CreateEvent() {
                                             <div className="right-content">
                                                 <div className="row">
                                                     <div className="col-lg-12">
-                                                        <h1>Create category </h1>
+                                                        <h1>Create Event Organizer</h1>
                                                         <br></br>
                                                         <br></br>
+                                                        <div className="col-lg-6">
+                                                            <fieldset>
+                                                                <label for="cars">Organizer:</label>
+                                                                {localStorage.getItem("Nom")}
+                                                            </fieldset>
+
+                                                        </div>
                                                         <form id="contact-form" action="" method="post">
-                                                            {/* <div className="i-am-centered"> */}
+
 
                                                             <div className="row" >
+
                                                                 <div className="col-lg-6">
                                                                     <fieldset>
                                                                         <input type="name"
@@ -418,17 +426,7 @@ function CreateEvent() {
                                                                     </fieldset>
                                                                 </div>
                                                                 <br></br>
-                                                                {/* <div className="col-lg-6">
-                                                                    <fieldset>
-                                                                        <input type="name"
-                                                                            name="name" id="name"
-                                                                            placeholder="Your  File..."
-                                                                            autocomplete="on" required
-                                                                            value={file}
-                                                                            onChange={(e) => setFile(e.target.value)}
-                                                                        />
-                                                                    </fieldset>
-                                                                </div> */}
+
 
                                                                 <div className="col-lg-6">
                                                                     <fieldset>
@@ -470,36 +468,12 @@ function CreateEvent() {
                                                                         />
                                                                     </fieldset>
                                                                 </div>
-                                                                {/* <div className="col-lg-6">
-                                                                    <fieldset>
-                                                                        <input type="text"
-                                                                            name="email"
-                                                                            id="email"
 
-                                                                            placeholder="Your Equipement..."
-                                                                            required=""
-                                                                            value={equipement}
-                                                                            onChange={(e) => setEquipement(e.target.value)}
-
-                                                                        />
-                                                                    </fieldset>
-                                                                </div> */}
 
                                                                 <br></br>
 
 
 
-                                                                {/* <br></br>
-
-                                <div className="col-lg-6">
-                                    <fieldset>
-
-                                        <input type="file" required="" onChange={onFileChange}
-
-
-                                        />
-                                    </fieldset>
-                                </div> */}
 
 
 
@@ -520,24 +494,7 @@ function CreateEvent() {
                                                                 <br></br>
                                                                 <br></br>
                                                                 <div>
-                                                                    <div className="col-lg-6">
-                                                                        <fieldset>
 
-
-                                                                            <label for="cars">Organizer:</label>
-
-                                                                            <br></br>
-                                                                            <br></br>
-
-                                                                            <select style={{ backgroundColor: "white", borderRadius: "12%" }} id="cars" onChange={e => onChangeHandler1(e)} >
-                                                                                {dispoListusers.map((dispo1) => (
-                                                                                    <option id={dispo1._id}> {dispo1.firstname}</option>
-                                                                                ))}
-                                                                            </select>
-                                                                        </fieldset>
-
-
-                                                                    </div>
 
 
 
@@ -650,4 +607,4 @@ function CreateEvent() {
 
     )
 }
-export default CreateEvent
+export default CreateEventOrganisateur
