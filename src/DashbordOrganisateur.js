@@ -2,10 +2,13 @@ import React from "react";
 import Footer from "./footer";
 import Navbar from "./navbar";
 import { Link, useNavigate } from "react-router-dom";
+import LoginService from "./services/LoginService"
 
 function DashboardOrganisateur() {
+    const LS = new LoginService()
 
     const navigate = useNavigate();
+    var iduser = localStorage.getItem("resultID")
 
 
 
@@ -24,9 +27,35 @@ function DashboardOrganisateur() {
     const CreateEvent = () => {
         alert("Vers Create Create Event")
         //navigation vers la page eventdaetail/id
-        navigate("/createEvent")
+        navigate("/cerateEventOrganisateur")
     }
 
+    const logoutFN = (id) => {
+
+        alert("Logout ")
+        LS.Logout(id).then((res) => {
+            console.log("result ", res)
+            localStorage.removeItem("resultID");
+            localStorage.removeItem("resultToken");
+            console.log("id apres logout", localStorage.getItem("resultID"))
+            console.log("token apres logout", localStorage.getItem("resultToken"))
+            navigate("/")
+
+        })
+    }
+
+    const settingFN = (id) => {
+
+        navigate("/UpDateProfile/" + id, { state: { id: id } })
+    }
+    const profileFN = (id) => {
+
+          navigate("/registerDetails/" + id, { state: { id: id } })
+
+
+
+      
+    }
     return (
 
 
@@ -190,24 +219,19 @@ function DashboardOrganisateur() {
                                     <div className="nav-profile-text">English </div>
                                 </a>
                                 <div className="dropdown-menu center navbar-dropdown" aria-labelledby="profileDropdown">
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-bl me-3"></i> French </a>
+                                    <a className="dropdown-item" onClick={(e) => profileFN(iduser)}>
+                                        <i className="mdi mdi-account"></i> Profile </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-cn me-3"></i> Chinese </a>
+                                    <a className="dropdown-item" onClick={(e) => settingFN(iduser)}>
+                                        <i className="mdi mdi-home-circle"></i> settings </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-de me-3"></i> German </a>
+                                    <a className="dropdown-item" onClick={(e) => logoutFN(iduser)}>
+                                        <i className="mdi mdi-account-key"></i> Logout </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-ru me-3"></i>Russian </a>
+
                                 </div>
                             </li>
-                            <li className="nav-item nav-logout d-none d-lg-block">
-                                <a className="nav-link" href="index.html">
-                                    <i className="mdi mdi-home-circle"></i>
-                                </a>
-                            </li>
+
                         </ul>
                         <button className="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
                             data-toggle="offcanvas">

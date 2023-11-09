@@ -23,6 +23,9 @@ import DashboardOrganisateur from './DashbordOrganisateur';
 import CreateEventOrganisateur from './createEventOrganisateur';
 import AfficheEventOrganizer from './AfficheEventsOrganizer';
 import AfficheDetailsEventOrganizer from './AfficheDetailsEventOrganizer';
+import RegisterDetails from "./RegisterDetails"
+import Logout from './Logout';
+import UpDateProfile from './UpDateProfile';
 
 
 
@@ -48,14 +51,15 @@ function App() {
           <Route path="/Dashbodorganisateur" element={<DashboardOrganisateur />} />
           <Route path="/cerateEventOrganisateur" element={<CreateEventOrganisateur />} />
           <Route path="/AfficheEventOrganizer" element={<AfficheEventOrganizer />} />
-          *<Route path="/AfficheDetailsEventOrganizer" element={<AfficheDetailsEventOrganizer />} />
+          <Route path="/AfficheDetailsEventOrganizer" element={<AfficheDetailsEventOrganizer />} />
+          <Route path="/" element={<Register />} />
 
           <Route path="/events" element={<Events />} />
           <Route path="/categories" element={<Categories />} />
           <Route path="/users" element={<Users />} />
           <Route path="/footer" element={<Footer />} />
           <Route path="/navbar" element={<Navbar />} />
-          <Route path="/details/:id" element={<Details />} />
+          <Route path="/details/:id" element={<RegisterDetails />} />
           <Route path="/createUser" element={<CreateUser />} />
           <Route path="/editUser/:id" element={<EditUser />} />
           <Route path="/detailsCategorie/:id" element={<DetailsCategorie />} />
@@ -67,6 +71,9 @@ function App() {
           <Route path="/modifierEvent/:id" element={<ModifierEvent />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/registerDetails/:id" element={<RegisterDetails />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/UpDateProfile/:id" element={<UpDateProfile />} />
 
 
 

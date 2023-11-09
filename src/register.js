@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import UserService from "../src/services/LoginService";
+import UserService from "./services/UserService";
 import { useNavigate } from "react-router-dom";
 
 
@@ -63,9 +63,9 @@ function Register() {
         console.log(formData)
 
         US.create(formData).then((res) => {
-            // console.log(res.data)
+        console.log(res.data)
         })
-        navigate("/notfound")
+        navigate("/")
     }
 
     return (
@@ -194,7 +194,7 @@ function Register() {
                                                 >
                                                     <option >Role</option>
                                                     <option value="admin">Admin</option>
-                                                    <option value="client">Client</option>
+                                                    <option value="Organizer">Organizer</option>
 
                                                 </select>
                                             </fieldset>

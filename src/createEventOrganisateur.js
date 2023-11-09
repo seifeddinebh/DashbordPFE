@@ -346,7 +346,7 @@ function CreateEventOrganisateur() {
                             <div className="header-left">
 
                                 {/* <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new Categorie </button> */}
-                                <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new Event </button>
+                                {/* <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new Event </button> */}
 
                             </div>
 

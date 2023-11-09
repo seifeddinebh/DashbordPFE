@@ -5,7 +5,7 @@ export default class UserService {
     create(data) {
 
         console.log("***userService***", data)
-        return http.post("/User/Create/", data);
+        return http.post("/User/Create", data);
 
     }
 
