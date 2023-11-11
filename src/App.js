@@ -26,6 +26,7 @@ import AfficheDetailsEventOrganizer from './AfficheDetailsEventOrganizer';
 import RegisterDetails from "./RegisterDetails"
 import Logout from './Logout';
 import UpDateProfile from './UpDateProfile';
+import UpDateEventOrganizer from './UpDateEventOrganiser';
 
 
 
@@ -51,7 +52,8 @@ function App() {
           <Route path="/Dashbodorganisateur" element={<DashboardOrganisateur />} />
           <Route path="/cerateEventOrganisateur" element={<CreateEventOrganisateur />} />
           <Route path="/AfficheEventOrganizer" element={<AfficheEventOrganizer />} />
-          <Route path="/AfficheDetailsEventOrganizer" element={<AfficheDetailsEventOrganizer />} />
+          <Route path="/AfficheDetailsEventOrganizer/:id" element={<AfficheDetailsEventOrganizer />} />
+          <Route path="/UpDateEventOrganiser/:id" element={<UpDateEventOrganizer />} />
           <Route path="/" element={<Register />} />
 
           <Route path="/events" element={<Events />} />

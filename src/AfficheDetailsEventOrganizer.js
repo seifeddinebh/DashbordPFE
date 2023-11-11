@@ -88,7 +88,7 @@ function AfficheDetailsEventOrganizer() {
     const Modifier = (id) => {
         alert("Vers Create Modifier")
         //navigation vers la page eventdaetail/id
-        navigate("/modifierEvent/" + id, { state: { id: id } })
+        navigate("/UpDateEventOrganiser/" + id, { state: { id: id } })
     }
 
     const Supprimer = (id) => {
@@ -124,7 +124,7 @@ function AfficheDetailsEventOrganizer() {
         <div className="container-scroller">
 
 
-            <Navbar />
+
             <br></br>
 
             <div className="container-fluid page-body-wrapper">
@@ -336,7 +336,7 @@ function AfficheDetailsEventOrganizer() {
                                 <br></br>
                                 <button type="button" class="btn btn-primary" onClick={(e) => Modifier(id)}>UpDate</button>
                                 <br></br>
-                                <button type="button" class="btn btn-success" onClick={(e) => navigate("/events")}>Back</button>
+                                <button type="button" class="btn btn-success" onClick={(e) => navigate("/Dashbodorganisateur")}>Back</button>
                             </div>
 
 

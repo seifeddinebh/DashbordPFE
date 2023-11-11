@@ -1,15 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "./footer";
 import Navbar from "./navbar";
 import { Link, useNavigate } from "react-router-dom";
 import LoginService from "./services/LoginService"
+import EventService from "./services/EventService";
 
 function DashboardOrganisateur() {
+
+
+    const [query, setquery] = useState("")
+    const [events, setEvents] = useState([])
+
     const LS = new LoginService()
+    const ES = new EventService()
 
     const navigate = useNavigate();
     var iduser = localStorage.getItem("resultID")
 
+
+    useEffect(() => {
+
+        AllEvents()
+
+    }, [])
+    const AllEvents = () => {
+        ES.FindByOrganiser(iduser).then((res) => {
+
+            console.log("Liste des events avec id organisateur", res.data.data);
+            setEvents(res.data.data);
+
+        })
+    }
 
 
     const CreatePage = () => {
@@ -50,11 +71,21 @@ function DashboardOrganisateur() {
     }
     const profileFN = (id) => {
 
-          navigate("/registerDetails/" + id, { state: { id: id } })
+        navigate("/registerDetails/" + id, { state: { id: id } })
 
 
 
-      
+
+    }
+
+    // const viewDetailsfunction = (id) => {
+    //     alert("bonjour")
+    //     //navigation vers la page eventdaetail/id
+    //     navigate("/AfficheDetailsEventOrganizer/" + id, { state: { id: id } })
+    // }
+
+    const detialFN = (id) => {
+        navigate("/AfficheDetailsEventOrganizer/" + id, { state: { id: id } })
     }
     return (
 
@@ -255,68 +286,36 @@ function DashboardOrganisateur() {
 
 
 
-                        <div className="row">
-                            <div className="col-sm-4 stretch-card grid-margin">
-                                <div className="card">
-                                    <div className="card-body p-0">
-                                        <img className="img-fluid w-100" src="../assets/images/dashboard/img_1.jpg" alt="" />
-                                    </div>
-                                    <div className="card-body px-3 text-dark">
-                                        <div className="d-flex justify-content-between">
-                                            <p className="text-muted font-13 mb-0">ENTIRE APARTMENT</p>
-                                            <i className="mdi mdi-heart-outline"></i>
+
+
+
+                        {events.map((event) => (
+
+                            <div style={{ display: "inline-flex" }}>
+
+                                <div className="col-lg-12 stretch-card grid-margin">
+                                    <div className="card" onClick={e => { detialFN(event._id) }}>
+                                        <div className="card-body p-0">
+                                            <img src={`http://localhost:3000/storages/${event.photo}`} width="250" alt="" />
                                         </div>
-                                        <h5 className="font-weight-semibold"> Cosy Studio flat in London </h5>
-                                        <div className="d-flex justify-content-between font-weight-semibold">
-                                            <p className="mb-0">
-                                                <i className="mdi mdi-star star-color pe-1"></i>4.60 (35)
-                                            </p>
-                                            <p className="mb-0">$5,267/night</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-sm-4 stretch-card grid-margin">
-                                <div className="card">
-                                    <div className="card-body p-0">
-                                        <img className="img-fluid w-100" src="../assets/images/dashboard/img_2.jpg" alt="" />
-                                    </div>
-                                    <div className="card-body px-3 text-dark">
-                                        <div className="d-flex justify-content-between">
-                                            <p className="text-muted font-13 mb-0">ENTIRE APARTMENT</p>
-                                            <i className="mdi mdi-heart-outline"></i>
-                                        </div>
-                                        <h5 className="font-weight-semibold"> Victoria Bedsit Studio Ensuite </h5>
-                                        <div className="d-flex justify-content-between font-weight-semibold">
-                                            <p className="mb-0">
-                                                <i className="mdi mdi-star star-color pe-1"></i>4.83 (12)
-                                            </p>
-                                            <p className="mb-0">$6,144/night</p>
+                                        <div className="card-body px-3 text-dark">
+                                            <div className="d-flex justify-content-between">
+                                                <p className="text-muted font-13 mb-0">{event.name}</p>
+                                                <i className="mdi mdi-heart-outline"></i>
+                                            </div>
+                                            <h5 className="font-weight-semibold">{event.description}  </h5>
+                                            <div className="d-flex justify-content-between font-weight-semibold">
+                                                <p className="mb-0">
+                                                    <i className="mdi mdi-star star-color pe-1"></i>{event.localisation} (35)
+                                                </p>
+                                                <p className="mb-0">{event.budget}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-sm-4 stretch-card grid-margin">
-                                <div className="card">
-                                    <div className="card-body p-0">
-                                        <img className="img-fluid w-100" src="../assets/images/dashboard/img_3.jpg" alt="" />
-                                    </div>
-                                    <div className="card-body px-3 text-dark">
-                                        <div className="d-flex justify-content-between">
-                                            <p className="text-muted font-13 mb-0">ENTIRE APARTMENT</p>
-                                            <i className="mdi mdi-heart-outline"></i>
-                                        </div>
-                                        <h5 className="font-weight-semibold">Fabulous Huge Room</h5>
-                                        <div className="d-flex justify-content-between font-weight-semibold">
-                                            <p className="mb-0">
-                                                <i className="mdi mdi-star star-color pe-1"></i>3.83 (15)
-                                            </p>
-                                            <p className="mb-0">$5,267/night</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        ))}
+
 
 
                     </div>

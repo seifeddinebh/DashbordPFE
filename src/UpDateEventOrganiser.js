@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import Footer from "./footer";
-import Navbar from "./navbar";
+
 import CategorieService from "./services/CategorieService";
 import EventService from "./services/EventService";
 import UserService from "./services/UserService"
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Select from "react-select";
+import Swal from "sweetalert2"
 
-function CreateEventOrganisateur() {
+function UpDateEventOrganizer() {
+
+
+    const [id, setid] = useState("")
+    const location = useLocation()
+    //*********************************************** */
     let nextId = 0;
-
-
     const [namevent, setNamevent] = useState('');
     const [chaine, setChaine] = useState('');
     const [artists1, setArtists1] = useState([]);
@@ -18,7 +22,7 @@ function CreateEventOrganisateur() {
     const [array1, setarray1] = useState([]);
     const [array2, setarray2] = useState([]);
     const [events, setEvents] = useState("");
-    const [id, setId] = useState("")
+
     const [name, setName] = useState("")
     const [name1, setName1] = useState("")
     const [description, setDescription] = useState("")
@@ -46,14 +50,7 @@ function CreateEventOrganisateur() {
     const onFileChange = event => {
         setPhoto(event.target.files[0]);
     };
-    const optionList = [
-        { value: "", label: "Color" },
-        { value: "red", label: "Red" },
-        { value: "green", label: "Green" },
-        { value: "yellow", label: "Yellow" },
-        { value: "blue", label: "Blue" },
-        { value: "white", label: "White" }
-    ];
+
     const navigate = useNavigate()
     const ES = new EventService();
     const US = new UserService();
@@ -77,10 +74,9 @@ function CreateEventOrganisateur() {
         }
 
 
-        //alert(query1)
+        alert(namevent)
         const formData = new FormData();
         formData.append("name", namevent)
-
         formData.append("description", description)
         formData.append("budgetevent", budgetevent)
         formData.append("photo", photo)
@@ -90,15 +86,22 @@ function CreateEventOrganisateur() {
         formData.append("price", price)
         formData.append("equipement", array1)
         formData.append("tags", array2)
-        formData.append("organizer", localStorage.getItem("resultID"))
+        formData.append("organizer", id)
         formData.append("category", y)
 
 
 
 
-        ES.create(formData).then((res) => {
-            console.log(res.data.data)
+        // ES.create(formData).then((res) => {
+        //     console.log(res.data.data)
+        // })
+        ES.update(id, formData).then((res) => {
+            console.log("Ok")
+            // alert('The profile is updated!');
+
         })
+
+
 
 
         navigate("/Dashbodorganisateur")
@@ -123,7 +126,8 @@ function CreateEventOrganisateur() {
     }
     useEffect(() => {
 
-
+        setid(location.state.id)
+        OneEventFunction(location.state.id)
         US.getOrganiser().then((res) => {
 
             console.log("Liste des Users ", res.data.data);
@@ -139,28 +143,22 @@ function CreateEventOrganisateur() {
 
     }, [])
 
-    function handleSelect(data) {
-        setSelectedOptions(data);
-        //  console.log("***selectedOptions value****", selectedOptions)
-
-        selectedOptions.map((ones) => { array.push(ones.value) })
-        // setEquipement(data)
-
-        console.log("liste des array", array);
-        console.log("type of array", typeof (array.toString));
-        console.log("to string array", array.toString);
-        //var C1= "tttttt,555,jjj,oooo";
-        var C1 = array.toString()
-        let chaine = C1.split(",");
-        sett(chaine);
-        console.log("***********t******", t.split(","));
-
-    }
+    const OneEventFunction = (id) => {
+        ES.GetOne(id).then((res) => {
+            console.log("one event ", res.data.data)
+            setNamevent(res.data.data.name)
+            console.log("********", res.data.data.name)
+            setDescription(res.data.data.description)
+            setBudgetevent(res.data.data.budgetevent)
+            setLocalisation(res.data.data.localisation)
+            setPeriode(res.data.data.periode)
+            setTags(res.data.data.tags)
+            setEquipement(res.data.data.equipement)
+            setOrganizer(res.data.data.organizer)
+            setCategory(res.data.data.category)
 
 
-    function GetTags() {
-
-
+        })
     }
 
 
@@ -303,7 +301,7 @@ function CreateEventOrganisateur() {
                         </ul>
                         <ul className="navbar-nav navbar-nav-right">
                             <li className="nav-item nav-logout d-none d-md-block me-3">
-                                <a className="nav-link" href="#">Dashbord Organisateur</a>
+                                <a className="nav-link" href="#">Status</a>
                             </li>
                             <li className="nav-item nav-logout d-none d-md-block">
                                 <button className="btn btn-sm btn-danger">Trailing</button>
@@ -345,8 +343,7 @@ function CreateEventOrganisateur() {
                         <div className="page-header flex-wrap">
                             <div className="header-left">
 
-                                {/* <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new Categorie </button> */}
-                                {/* <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new Event </button> */}
+                                <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new Event </button>
 
                             </div>
 
@@ -370,21 +367,13 @@ function CreateEventOrganisateur() {
                                             <div className="right-content">
                                                 <div className="row">
                                                     <div className="col-lg-12">
-                                                        <h1>Create Event Organizer</h1>
+                                                        <h1>Create category </h1>
                                                         <br></br>
                                                         <br></br>
-                                                        <div className="col-lg-6">
-                                                            <fieldset>
-                                                                <label for="cars">Organizer:</label>
-                                                                {localStorage.getItem("Nom")}
-                                                            </fieldset>
-
-                                                        </div>
                                                         <form id="contact-form" action="" method="post">
-
+                                                            {/* <div className="i-am-centered"> */}
 
                                                             <div className="row" >
-
                                                                 <div className="col-lg-6">
                                                                     <fieldset>
                                                                         <input type="name"
@@ -427,7 +416,6 @@ function CreateEventOrganisateur() {
                                                                 </div>
                                                                 <br></br>
 
-
                                                                 <div className="col-lg-6">
                                                                     <fieldset>
 
@@ -469,16 +457,9 @@ function CreateEventOrganisateur() {
                                                                     </fieldset>
                                                                 </div>
 
-
                                                                 <br></br>
 
 
-
-
-
-
-
-                                                                <br></br>
                                                                 <br></br>
 
                                                                 <div className="col-lg-6">
@@ -494,7 +475,19 @@ function CreateEventOrganisateur() {
                                                                 <br></br>
                                                                 <br></br>
                                                                 <div>
+                                                                    <div className="col-lg-6">
+                                                                        <fieldset>
 
+
+                                                                            <label for="cars"> the actual Organizer:</label>
+                                                                            &nbsp;&nbsp;&nbsp;
+                                                                            Organizer: {organizer.firstname}
+
+
+                                                                        </fieldset>
+
+
+                                                                    </div>
 
 
 
@@ -502,7 +495,10 @@ function CreateEventOrganisateur() {
                                                                         <fieldset>
 
 
-                                                                            <label for="cars">Categories:</label>
+                                                                            <label for="cars">the actual Categories:</label>
+                                                                            &nbsp;&nbsp;&nbsp;
+                                                                            <label for="cars">{category.name}</label>
+
 
                                                                             <br></br>
                                                                             <br></br>
@@ -521,7 +517,9 @@ function CreateEventOrganisateur() {
 
                                                             </div>
                                                             <br></br><br></br>
-                                                            <label for="cars">Tags:</label>
+                                                            <label for="cars">the actual Tags:</label>
+                                                            &nbsp;&nbsp;&nbsp;
+                                                            <label for="cars">{tags}</label>
                                                             <br></br>
                                                             <input
                                                                 value={name}
@@ -546,7 +544,9 @@ function CreateEventOrganisateur() {
                                                             </ul>
 
                                                             <br></br><br></br>
-                                                            <label for="cars">Equipements:</label>
+                                                            <label for="cars">the actual Equipements:</label>
+                                                            &nbsp;&nbsp;&nbsp;
+                                                            <label for="cars">{equipement}</label>
                                                             <br></br>
                                                             <input
                                                                 value={name1}
@@ -574,7 +574,7 @@ function CreateEventOrganisateur() {
                                                                 <br></br>
 
                                                                 <fieldset>
-                                                                    <button onClick={(e) => SignInFunction(e)} id="form-submit" className="orange-button"> Create</button>
+                                                                    <button onClick={(e) => SignInFunction(e)} id="form-submit" className="orange-button"> Update</button>
                                                                 </fieldset>
                                                             </div>
 
@@ -607,4 +607,4 @@ function CreateEventOrganisateur() {
 
     )
 }
-export default CreateEventOrganisateur
+export default UpDateEventOrganizer

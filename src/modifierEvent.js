@@ -632,7 +632,7 @@ function ModifierEvent() {
                                                                 <br></br>
 
                                                                 <fieldset>
-                                                                    <button onClick={(e) => SignInFunction(e)} id="form-submit" className="orange-button"> Create</button>
+                                                                    <button onClick={(e) => SignInFunction(e)} id="form-submit" className="orange-button"> Update</button>
                                                                 </fieldset>
                                                             </div>
 
