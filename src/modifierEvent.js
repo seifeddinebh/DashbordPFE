@@ -14,8 +14,9 @@ function ModifierEvent() {
     const [id, setid] = useState("")
     const location = useLocation()
     //*********************************************** */
+    const [nomOrganisateur,setNomOrganisateur]=useState("pas d'organisateur")
     let nextId = 0;
-    const [namevent, setNamevent] = useState('');
+     const [namevent, setNamevent] = useState('');
     const [chaine, setChaine] = useState('');
     const [artists1, setArtists1] = useState([]);
     const [artists, setArtists] = useState([]);
@@ -50,14 +51,7 @@ function ModifierEvent() {
     const onFileChange = event => {
         setPhoto(event.target.files[0]);
     };
-    const optionList = [
-        { value: "", label: "Color" },
-        { value: "red", label: "Red" },
-        { value: "green", label: "Green" },
-        { value: "yellow", label: "Yellow" },
-        { value: "blue", label: "Blue" },
-        { value: "white", label: "White" }
-    ];
+ 
     const navigate = useNavigate()
     const ES = new EventService();
     const US = new UserService();
@@ -83,7 +77,7 @@ function ModifierEvent() {
 
         //alert(query1)
         const formData = new FormData();
-        formData.append("name", namevent)
+formData.append("name", namevent)
 
         formData.append("description", description)
         formData.append("budgetevent", budgetevent)
@@ -154,14 +148,20 @@ function ModifierEvent() {
     const OneEventFunction = (id) => {
         ES.GetOne(id).then((res) => {
             console.log("one event ", res.data.data)
-            setNamevent(res.data.data.name)
+           setNamevent(res.data.data.name)
             setDescription(res.data.data.description)
-            setBudgetevent(res.data.data.price)
+            setBudgetevent(res.data.data.budgetevent)
             setLocalisation(res.data.data.localisation)
             setPeriode(res.data.data.periode)
             setTags(res.data.data.tags)
             setEquipement(res.data.data.equipement)
-            setOrganizer(res.data.data.organizer)
+            if (res.data.data.organizer != null) {
+                setOrganizer(res.data.data.organizer)
+                setNomOrganisateur(res.data.data.organizer.firstname)
+            }
+            else {
+                console.log("************************************no organiser*****************");
+            }
             setCategory(res.data.data.category)
 
 
@@ -401,8 +401,8 @@ function ModifierEvent() {
                                                                             id="surname"
                                                                             placeholder="Your budget..."
                                                                             autocomplete="on" required
-                                                                            value={price}
-                                                                            onChange={(e) => setPrice(e.target.value)}
+                                                                            value={budgetevent}
+                                                                            onChange={(e) => setBudgetevent(e.target.value)}
 
                                                                         />
                                                                     </fieldset>
@@ -423,17 +423,7 @@ function ModifierEvent() {
                                                                     </fieldset>
                                                                 </div>
                                                                 <br></br>
-                                                                {/* <div className="col-lg-6">
-                                                                    <fieldset>
-                                                                        <input type="name"
-                                                                            name="name" id="name"
-                                                                            placeholder="Your  File..."
-                                                                            autocomplete="on" required
-                                                                            value={file}
-                                                                            onChange={(e) => setFile(e.target.value)}
-                                                                        />
-                                                                    </fieldset>
-                                                                </div> */}
+                                                              
 
                                                                 <div className="col-lg-6">
                                                                     <fieldset>
@@ -450,7 +440,7 @@ function ModifierEvent() {
                                                                 <div className="col-lg-6">
                                                                     <fieldset>
                                                                         <input type="surname"
-                                                                            name="surname"
+                                                                            name="location"
                                                                             id="surname"
                                                                             placeholder="Your Localisation..."
                                                                             autocomplete="on" required
@@ -475,55 +465,15 @@ function ModifierEvent() {
                                                                         />
                                                                     </fieldset>
                                                                 </div>
-                                                                {/* <div className="col-lg-6">
-                                                                    <fieldset>
-                                                                        <input type="text"
-                                                                            name="email"
-                                                                            id="email"
-
-                                                                            placeholder="Your Equipement..."
-                                                                            required=""
-                                                                            value={equipement}
-                                                                            onChange={(e) => setEquipement(e.target.value)}
-
-                                                                        />
-                                                                    </fieldset>
-                                                                </div> */}
+              
 
                                                                 <br></br>
 
 
 
-                                                                {/* <br></br>
-
-                                <div className="col-lg-6">
-                                    <fieldset>
-
-                                        <input type="file" required="" onChange={onFileChange}
-
-
-                                        />
-                                    </fieldset>
-                                </div> */}
-
-
-
 
                                                                 <br></br>
-                                                                <br></br>
-
-                                                                <div className="col-lg-6">
-                                                                    <fieldset>
-
-                                                                        <input type="file" required="" onChange={onFileChange}
-
-
-                                                                        />
-                                                                    </fieldset>
-                                                                </div>
-
-                                                                <br></br>
-                                                                <br></br>
+                                                  
                                                                 <div>
                                                                     <div className="col-lg-6">
                                                                         <fieldset>

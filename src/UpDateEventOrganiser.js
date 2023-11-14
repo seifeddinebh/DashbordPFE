@@ -27,7 +27,7 @@ function UpDateEventOrganizer() {
     const [name1, setName1] = useState("")
     const [description, setDescription] = useState("")
     const [photo, setPhoto] = useState("")
-    const [file, setFile] = useState("")
+    // const [file, setFile] = useState("")
     const [localisation, setLocalisation] = useState("")
     const [periode, setPeriode] = useState("")
     const [budgetevent, setBudgetevent] = useState("")
@@ -63,24 +63,20 @@ function UpDateEventOrganizer() {
             artists.map((ar) => {
                 array2.push(ar.name)
             })
-
-
-
             //adaptation de liste des equipement dans tableau array1
             artists1.map((ar1) => {
                 array1.push(ar1.name)
             })
-
         }
-
-
         alert(namevent)
+        const data = { "name": namevent }
+        console.log(data)
         const formData = new FormData();
         formData.append("name", namevent)
         formData.append("description", description)
         formData.append("budgetevent", budgetevent)
         formData.append("photo", photo)
-        formData.append("file", file)
+        // formData.append("file", file)
         formData.append("localisation", localisation)
         formData.append("periode", periode)
         formData.append("price", price)
@@ -104,9 +100,8 @@ function UpDateEventOrganizer() {
 
 
 
-        navigate("/Dashbodorganisateur")
+        // navigate("/Dashbodorganisateur")
     }
-
 
     const onChangeHandler1 = (e) => {
         const index = e.target.selectedIndex;
@@ -161,21 +156,9 @@ function UpDateEventOrganizer() {
         })
     }
 
-
-
-
-
-
-
-
     return (
 
-
         <div className="container-scroller">
-
-
-
-
             <div className="container-fluid page-body-wrapper">
 
                 <div id="settings-trigger"><i className="mdi mdi-settings"></i></div>
@@ -417,6 +400,7 @@ function UpDateEventOrganizer() {
                                                                 <br></br>
 
                                                                 <div className="col-lg-6">
+                                                                    Photo:
                                                                     <fieldset>
 
                                                                         <input type="file" required="" onChange={onFileChange}
@@ -462,15 +446,7 @@ function UpDateEventOrganizer() {
 
                                                                 <br></br>
 
-                                                                <div className="col-lg-6">
-                                                                    <fieldset>
 
-                                                                        <input type="file" required="" onChange={onFileChange}
-
-
-                                                                        />
-                                                                    </fieldset>
-                                                                </div>
 
                                                                 <br></br>
                                                                 <br></br>
@@ -505,7 +481,7 @@ function UpDateEventOrganizer() {
 
                                                                             <select style={{ backgroundColor: "white", borderRadius: "12%" }} id="cars" onChange={e => onChangeHandler2(e)} >
                                                                                 {dispoListcategories.map((dispo2) => (
-                                                                                    <option id={dispo2._id}> {dispo2.name}</option>
+                                                                                    <option id={dispo2._id} key={dispo2._id}> {dispo2.name}</option>
                                                                                 ))}
                                                                             </select>
                                                                         </fieldset>

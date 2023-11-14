@@ -17,7 +17,7 @@ function AfficheEvent() {
     //const CS = new CategorieService();
     const ES = new EventService();
     const navigate = useNavigate();
-
+    const [nomOrganisateur,setNomOrganisateur]=useState("pas d'organisateur")
     const [events, setEvents] = useState("");
     const [id, setId] = useState("")
     const [name, setName] = useState("")
@@ -69,7 +69,13 @@ function AfficheEvent() {
                     setEquipement(res.data.data.equipement);// Affichage ??
                     setTags(res.data.data.tags)// Affichage ??
 
-                    setOrganizer(res.data.data.organizer)
+                    if (res.data.data.organizer != null) {
+                        setOrganizer(res.data.data.organizer)
+                        setNomOrganisateur(res.data.data.organizer.firstname)
+                    }
+                    else {
+                        console.log("************************************no organiser*****************");
+                    }
                     setCategory(res.data.data.category)
 
 
@@ -302,13 +308,13 @@ function AfficheEvent() {
 
                                     <img src={`http://localhost:3000/storages/${events.photo}`} alt="" />
                                     <h5 class="my-3">{name}</h5>
-                                    <p class="text-muted mb-1">{budgetevent}</p>
-                                    <p class="text-muted mb-1">{description}</p>
+                                    <p class="text-muted mb-1">Budget :{budgetevent}</p>
+                                    <p class="text-muted mb-1">desc :{description}</p>
 
                                     <p class="text-muted mb-1">localisation:{localisation}</p>
                                     <p class="text-muted mb-1">Periode :{periode}</p>
 
-                                    <p class="text-muted mb-1">Price: {price}</p>
+
 
                                     <p class="text-muted mb-1">List des Equipements{equipement.map((Eqp) => (
                                         <li key={Eqp._id}> {Eqp}</li>
@@ -320,7 +326,7 @@ function AfficheEvent() {
 
 
                                     <p class="text-muted mb-1">
-                                        Organizer: {organizer.firstname}
+                                        Organizer: {nomOrganisateur}
                                     </p>
                                     <p class="text-muted mb-1">
                                         Categorie: {category.name}

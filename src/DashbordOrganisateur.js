@@ -6,7 +6,7 @@ import LoginService from "./services/LoginService"
 import EventService from "./services/EventService";
 
 function DashboardOrganisateur() {
-
+    const [iduser, setiduser] = useState("")
 
     const [query, setquery] = useState("")
     const [events, setEvents] = useState([])
@@ -15,15 +15,16 @@ function DashboardOrganisateur() {
     const ES = new EventService()
 
     const navigate = useNavigate();
-    var iduser = localStorage.getItem("resultID")
+
 
 
     useEffect(() => {
+        setiduser(localStorage.getItem("resultID"))
 
-        AllEvents()
+        AllEvents(localStorage.getItem("resultID"))
 
     }, [])
-    const AllEvents = () => {
+    const AllEvents = (iduser) => {
         ES.FindByOrganiser(iduser).then((res) => {
 
             console.log("Liste des events avec id organisateur", res.data.data);

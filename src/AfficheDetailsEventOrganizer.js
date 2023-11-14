@@ -55,7 +55,6 @@ function AfficheDetailsEventOrganizer() {
                 console.log("detailss", res.data.data);
                 if (res.data.data) {
                     setEvents(res.data.data);
-
                     setName(res.data.data.name);
                     setDescription(res.data.data.description);
                     setBudgetevent(res.data.data.budgetevent)
@@ -65,19 +64,10 @@ function AfficheDetailsEventOrganizer() {
                     setBudgetevent(res.data.data.budgetevent)
                     setPrice(res.data.data.price);
                     setlocalisation(res.data.data.localisation)
-
                     setEquipement(res.data.data.equipement);// Affichage ??
                     setTags(res.data.data.tags)// Affichage ??
-
                     setOrganizer(res.data.data.organizer)
                     setCategory(res.data.data.category)
-
-
-
-
-
-
-
                 }
 
             })
@@ -320,7 +310,7 @@ function AfficheDetailsEventOrganizer() {
 
 
                                     <p class="text-muted mb-1">
-                                        Organizer: {organizer.firstname}
+                                        {/* Organizer: {organizer.firstname} */}
                                     </p>
                                     <p class="text-muted mb-1">
                                         Categorie: {category.name}

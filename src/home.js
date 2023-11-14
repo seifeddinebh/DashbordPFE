@@ -1,18 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "./footer";
 import Navbar from "./navbar";
 import { Link, useNavigate } from "react-router-dom";
+import LoginService from "../src/services/LoginService"
 
 export function Home() {
+    const LS= new LoginService()
 
     const navigate = useNavigate();
+    const [iduser,setiduser]=useState("")
 
+    useEffect(() => {
+setiduser(localStorage.getItem('resultID'))
 
+    }, [])
 
     const CreatePage = () => {
         alert("Vers Create Page")
         //navigation vers la page eventdaetail/id
         navigate("/createUser")
+    }
+    const logoutFN = (id) => {
+
+        alert("Logout ")
+        LS.Logout(id).then((res) => {
+            console.log("result ", res)
+            localStorage.removeItem("resultID");
+            localStorage.removeItem("resultToken");
+            console.log("id apres logout", localStorage.getItem("resultID"))
+            console.log("token apres logout", localStorage.getItem("resultToken"))
+            navigate("/")
+
+        })
+    }
+
+    const settingFN = (id) => {
+
+        navigate("/UpDateProfile/" + id, { state: { id: id } })
+    }
+    const profileFN = (id) => {
+
+        navigate("/registerDetails/" + id, { state: { id: id } })
+
+
+
+
     }
 
     const CreateCategorie = () => {
@@ -79,7 +111,7 @@ export function Home() {
                     </div>
                 </div>
 
-                <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+              <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
                     <div className="navbar-menu-wrapper d-flex align-items-stretch">
                         <button className="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
                             <span className="mdi mdi-chevron-double-left"></span>
@@ -180,7 +212,7 @@ export function Home() {
                         </ul>
                         <ul className="navbar-nav navbar-nav-right">
                             <li className="nav-item nav-logout d-none d-md-block me-3">
-                                <a className="nav-link" href="#">Status</a>
+                                <a className="nav-link" href="#">Dashbord Organisateur</a>
                             </li>
                             <li className="nav-item nav-logout d-none d-md-block">
                                 <button className="btn btn-sm btn-danger">Trailing</button>
@@ -191,24 +223,19 @@ export function Home() {
                                     <div className="nav-profile-text">English </div>
                                 </a>
                                 <div className="dropdown-menu center navbar-dropdown" aria-labelledby="profileDropdown">
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-bl me-3"></i> French </a>
+                                    <a className="dropdown-item" onClick={(e) => profileFN(iduser)}>
+                                        <i className="mdi mdi-account"></i> Profile </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-cn me-3"></i> Chinese </a>
+                                    <a className="dropdown-item" onClick={(e) => settingFN(iduser)}>
+                                        <i className="mdi mdi-home-circle"></i> settings </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-de me-3"></i> German </a>
+                                    <a className="dropdown-item" onClick={(e) => logoutFN(iduser)}>
+                                        <i className="mdi mdi-account-key"></i> Logout </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-ru me-3"></i>Russian </a>
+
                                 </div>
                             </li>
-                            <li className="nav-item nav-logout d-none d-lg-block">
-                                <a className="nav-link" href="index.html">
-                                    <i className="mdi mdi-home-circle"></i>
-                                </a>
-                            </li>
+
                         </ul>
                         <button className="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
                             data-toggle="offcanvas">
@@ -216,6 +243,7 @@ export function Home() {
                         </button>
                     </div>
                 </nav>
+
 
                 <div className="main-panel">
                     <div className="content-wrapper pb-0">

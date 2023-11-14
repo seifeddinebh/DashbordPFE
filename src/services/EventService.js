@@ -25,7 +25,7 @@ export default class EventService {
         return http.delete("/Event/Delete/" + id);
     }
     update(id, data) {
-
+         console.log("test update")
         return http.put("/Event/Update/" + id, data);
     }
     GetOne(id) {
