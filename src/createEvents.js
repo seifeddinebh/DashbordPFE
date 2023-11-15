@@ -451,7 +451,7 @@ function CreateEvent() {
 
 
                                                             <div class="mb-3">
-                                                                <label for="formFile" class="form-label">Tages</label>
+                                                                <label for="formFile" class="form-label">Tags</label>
                                                                 <input
                                                                     value={name}
                                                                     onChange={e => setName(e.target.value)} class="form-control" placeholder="tags..." type="texte" id="formFile"
@@ -459,18 +459,18 @@ function CreateEvent() {
                                                             </div>
 
                                                             <p></p>
-                                                            <button  class="btn btn-primary"
-                                                             onClick={(e) => {
-                                                                e.preventDefault();
-                                                                setArtists([
-                                                                    ...artists,
-                                                                    { id: nextId++, name: name }
+                                                            <button class="btn btn-primary"
+                                                                onClick={(e) => {
+                                                                    e.preventDefault();
+                                                                    setArtists([
+                                                                        ...artists,
+                                                                        { id: nextId++, name: name }
 
-                                                                ]);
-                                                                console.log("artists", artists)
+                                                                    ]);
+                                                                    console.log("artists", artists)
 
 
-                                                            }}>Add other tag</button>
+                                                                }}>Add other tag</button>
                                                             <ul>
                                                                 {artists.map(artist =>
                                                                     (<li key={artist.id}>{artist.name}</li>)
@@ -490,17 +490,17 @@ function CreateEvent() {
                                                             </div>
 
                                                             <button class="btn btn-primary"
-                                                            onClick={(e) => {
-                                                                e.preventDefault();
-                                                                setArtists1([
-                                                                    ...artists1,
-                                                                    { id: nextId++, name: name1 }
+                                                                onClick={(e) => {
+                                                                    e.preventDefault();
+                                                                    setArtists1([
+                                                                        ...artists1,
+                                                                        { id: nextId++, name: name1 }
 
-                                                                ]);
-                                                                console.log("equipement", artists1)
+                                                                    ]);
+                                                                    console.log("equipement", artists1)
 
 
-                                                            }}>Add other equipement</button>
+                                                                }}>Add other equipement</button>
                                                             <ul>
                                                                 {artists1.map(artist1 =>
                                                                     (<li key={artist1.id}>{artist1.name}</li>)

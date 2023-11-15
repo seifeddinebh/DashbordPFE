@@ -1,12 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom"
 import { Link } from "react-router-dom";
+import UserService from "./services/UserService";
 
 function Navbar() {
-
-
+    const [firstname, setfirstname] = useState("")
+    const [lastname, setlastname] = useState("")
+    const [password, setpassword] = useState("")
+    const [adress, setadress] = useState("")
+    const [phone, setphone] = useState("")
+    const [photo, setphoto] = useState("")
+    const [email, setemail] = useState("")
+    const [cin, setcin] = useState("")
+    const [role, setrole] = useState("")
+    const iduser = localStorage.getItem("resultID")
     const navigate = useNavigate()
+    const us = new UserService();
+    useEffect(() => {
+        getadmin(iduser)
+    }, [])
+
+    const getadmin = (iduser) => {
+        us.findByid(iduser).then((res) => {
+            //
+            console.log("details admin", res.data.data);
+            if (res.data.data) {
+
+                setfirstname(res.data.data.firstname);
+                setlastname(res.data.data.lastname);
+                setpassword(res.data.data.password);
+                setadress(res.data.data.adress);
+                setphone(res.data.data.phone);
+                setemail(res.data.data.email);
+                setcin(res.data.data.cin);
+                setphoto(res.data.data.photo)
+                // setadress(res.data.data.adresse);
+                setrole(res.data.data.role);
+            }
+
+        })
+    }
     return (
 
 
@@ -15,20 +49,20 @@ function Navbar() {
                 <li className="nav-item nav-profile border-bottom">
                     <a href="#" className="nav-link flex-column">
                         <div className="nav-profile-image">
-                            <img src="../assets/images/faces/face1.jpg" alt="profile" />
+
+                            <img src={`http://localhost:3000/storages/${photo}`} alt="" />
 
                         </div>
                         <div className="nav-profile-text d-flex ms-0 mb-3 flex-column">
-                            <span className="font-weight-semibold mb-1 mt-2 text-center">Antonio Olson</span>
-                            <span className="text-secondary icon-sm text-center">$3499.00</span>
+                            <span className="font-weight-semibold mb-1 mt-2 text-center">{firstname}</span>
+                            <span className="text-secondary icon-sm text-center">{cin}</span>
                         </div>
                     </a>
                 </li>
                 <li className="nav-item pt-3">
                     <a className="nav-link d-block" href="index.html">
-                        <img className="sidebar-brand-logo" src="../assets/images/logo.svg" alt="" />
-                        <img className="sidebar-brand-logomini" src="../assets/images/logo-mini.svg" alt="" />
-                        <div className="small font-weight-light pt-1">Responsive Dashboard</div>
+
+                        <div className="small font-weight-light pt-1">{email}</div>
                     </a>
                     <form className="d-flex align-items-center" action="#">
                         <div className="input-group">

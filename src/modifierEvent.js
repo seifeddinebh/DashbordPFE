@@ -169,12 +169,6 @@ formData.append("name", namevent)
     }
 
 
-
-
-
-
-
-
     return (
 
 
@@ -374,166 +368,98 @@ formData.append("name", namevent)
                                         <div className="col-lg-6">
                                             <div className="right-content">
                                                 <div className="row">
-                                                    <div className="col-lg-12">
-                                                        <h1>Create category </h1>
+                                                    <div className="col-lg-7 offset-5">
+                                                        <h1>Update Event </h1>
                                                         <br></br>
                                                         <br></br>
                                                         <form id="contact-form" action="" method="post">
                                                             {/* <div className="i-am-centered"> */}
 
                                                             <div className="row" >
-                                                                <div className="col-lg-6">
-                                                                    <fieldset>
-                                                                        <input type="name"
-                                                                            name="name" id="name"
-                                                                            placeholder="Your  Name..."
-                                                                            autocomplete="on" required
-                                                                            value={namevent}
-                                                                            onChange={(e) => setNamevent(e.target.value)}
-                                                                        />
-                                                                    </fieldset>
-                                                                </div>
                                                                 <br></br>
-                                                                <div className="col-lg-6">
-                                                                    <fieldset>
-                                                                        <input type="surname"
-                                                                            name="surname"
-                                                                            id="surname"
-                                                                            placeholder="Your budget..."
-                                                                            autocomplete="on" required
-                                                                            value={budgetevent}
-                                                                            onChange={(e) => setBudgetevent(e.target.value)}
-
-                                                                        />
-                                                                    </fieldset>
-                                                                </div>
-                                                                <br></br>
-                                                                <div className="col-lg-6">
-                                                                    <fieldset>
-                                                                        <input type="text"
-                                                                            name="email"
-                                                                            id="email"
-
-                                                                            placeholder="Your Description..."
-                                                                            required=""
-                                                                            value={description}
-                                                                            onChange={(e) => setDescription(e.target.value)}
-
-                                                                        />
-                                                                    </fieldset>
-                                                                </div>
-                                                                <br></br>
-                                                              
-
-                                                                <div className="col-lg-6">
-                                                                    <fieldset>
-
-                                                                        <input type="file" required="" onChange={onFileChange}
-
-
-                                                                        />
-                                                                    </fieldset>
+                                                                <div class="mb-3">
+                                                                    <label for="formFile" class="form-label">Name</label>
+                                                                    <input class="form-control" placeholder="name..." type="texte" id="formFile" value={namevent}
+                                                                        onChange={(e) => setNamevent(e.target.value)} />
                                                                 </div>
 
-
+                                                                <p></p>
                                                                 <br></br>
-                                                                <div className="col-lg-6">
-                                                                    <fieldset>
-                                                                        <input type="surname"
-                                                                            name="location"
-                                                                            id="surname"
-                                                                            placeholder="Your Localisation..."
-                                                                            autocomplete="on" required
-                                                                            value={localisation}
-                                                                            onChange={(e) => setLocalisation(e.target.value)}
+                                                                <div class="mb-3">
+                                                                    <label for="formFile" class="form-label">Description</label>
+                                                                    <input class="form-control" placeholder="Description..." type="texte" id="formFile" value={description}
+                                                                        onChange={(e) => setDescription(e.target.value)} />
+                                                                </div>
 
-                                                                        />
-                                                                    </fieldset>
+                                                                <p></p>
+                                                                <br></br>
+                                                                <div class="mb-3">
+                                                                    <label for="formFile" class="form-label">Budget</label>
+                                                                    <input class="form-control" placeholder="budget..." type="texte" id="formFile" value={budgetevent}
+                                                                        onChange={(e) => setBudgetevent(e.target.value)} />
+                                                                </div>
+
+                                                                <p></p>
+                                                                <br></br>
+                                                                <div class="mb-3">
+                                                                    <label for="formFile" class="form-label">Periode</label>
+                                                                    <input class="form-control" placeholder="Your periode..." type="texte" id="formFile" value={periode}
+                                                                        onChange={(e) => setPeriode(e.target.value)} />
+                                                                </div>
+
+                                                                <p></p>
+                                                                <div class="mb-3">
+                                                                    <label for="formFile" class="form-label">Localisation</label>
+                                                                    <input class="form-control" placeholder="Your Localisation..." type="texte" id="formFile" value={localisation}
+                                                                        onChange={(e) => setLocalisation(e.target.value)} />
+                                                                </div>
+
+                                                                <p></p>
+                                                                <div class="mb-3">
+                                                                    <label for="formFile" class="form-label">Photo</label>
+                                                                    <input class="form-control" type="file" id="formFile" onChange={onFileChange} />
                                                                 </div>
                                                                 <br></br>
-                                                                <div className="col-lg-6">
-                                                                    <fieldset>
-                                                                        <input type="text"
-                                                                            name="email"
-                                                                            id="email"
-
-                                                                            placeholder="Your Periode..."
-                                                                            required=""
-                                                                            value={periode}
-                                                                            onChange={(e) => setPeriode(e.target.value)}
-
-                                                                        />
-                                                                    </fieldset>
-                                                                </div>
-              
+                                                                <p></p>
+                                                                <select class="form-select" aria-label="Default select example" onChange={e => onChangeHandler1(e)}>
+                                                                    {dispoListusers.map((dispo1) => (
+                                                                        <option id={dispo1._id}> {dispo1.firstname}</option>
+                                                                    ))}
+                                                                </select>
 
                                                                 <br></br>
-
-
+                                                                <br></br>
+                                                                <p></p>
+                                                                <select class="form-select" aria-label="Default select example" onChange={e => onChangeHandler2(e)}>
+                                                                    {dispoListcategories.map((dispo2) => (
+                                                                        <option id={dispo2._id}> {dispo2.name}</option>
+                                                                    ))}
+                                                                </select>
 
 
                                                                 <br></br>
-                                                  
                                                                 <div>
-                                                                    <div className="col-lg-6">
-                                                                        <fieldset>
-
-
-                                                                            <label for="cars"> the actual Organizer:</label>
-                                                                            &nbsp;&nbsp;&nbsp;
-                                                                            <label for="cars">{organizer.firstname}</label>
-
-                                                                            <br></br>
-                                                                            <br></br>
-
-                                                                            <select defaultValue={"select one"} style={{ backgroundColor: "white", borderRadius: "12%" }} id="cars" onChange={e => onChangeHandler1(e)} >
-                                                                                {dispoListusers.map((dispo1) => (
-
-                                                                                    <option id={dispo1._id}> {dispo1.firstname}</option>
-                                                                                ))}
-                                                                            </select>
-                                                                        </fieldset>
-
-
-                                                                    </div>
 
 
 
-                                                                    <div className="col-lg-6">
-                                                                        <fieldset>
-
-
-                                                                            <label for="cars">the actual Categories:</label>
-                                                                            &nbsp;&nbsp;&nbsp;
-                                                                            <label for="cars">{category.name}</label>
-
-
-                                                                            <br></br>
-                                                                            <br></br>
-
-                                                                            <select style={{ backgroundColor: "white", borderRadius: "12%" }} id="cars" onChange={e => onChangeHandler2(e)} >
-                                                                                {dispoListcategories.map((dispo2) => (
-                                                                                    <option id={dispo2._id}> {dispo2.name}</option>
-                                                                                ))}
-                                                                            </select>
-                                                                        </fieldset>
-
-
-                                                                    </div>
 
                                                                 </div>
 
                                                             </div>
                                                             <br></br><br></br>
-                                                            <label for="cars">the actual Tags:</label>
-                                                            &nbsp;&nbsp;&nbsp;
-                                                            <label for="cars">{tags}</label>
-                                                            <br></br>
-                                                            <input
-                                                                value={name}
-                                                                onChange={e => setName(e.target.value)}
-                                                            />
-                                                            <button onClick={(e) => {
+
+
+                                                            <div class="mb-3">
+                                                                <label for="formFile" class="form-label">Tages</label>
+                                                                <input
+                                                                    value={name}
+                                                                    onChange={e => setName(e.target.value)} class="form-control" placeholder="tags..." type="texte" id="formFile"
+                                                                />
+                                                            </div>
+
+                                                            <p></p>
+                                                            <button  class="btn btn-primary"
+                                                             onClick={(e) => {
                                                                 e.preventDefault();
                                                                 setArtists([
                                                                     ...artists,
@@ -552,15 +478,18 @@ formData.append("name", namevent)
                                                             </ul>
 
                                                             <br></br><br></br>
-                                                            <label for="cars">the actual Equipements:</label>
-                                                            &nbsp;&nbsp;&nbsp;
-                                                            <label for="cars">{equipement}</label>
-                                                            <br></br>
-                                                            <input
-                                                                value={name1}
-                                                                onChange={e => setName1(e.target.value)}
-                                                            />
-                                                            <button onClick={(e) => {
+
+
+                                                            <div class="mb-3">
+                                                                <label for="formFile" class="form-label">Equipements</label>
+                                                                <input
+                                                                    value={name1}
+                                                                    onChange={e => setName1(e.target.value)} class="form-control" placeholder="Equipement..." type="texte" id="formFile"
+                                                                />
+                                                            </div>
+
+                                                            <button class="btn btn-primary"
+                                                            onClick={(e) => {
                                                                 e.preventDefault();
                                                                 setArtists1([
                                                                     ...artists1,
@@ -582,7 +511,7 @@ formData.append("name", namevent)
                                                                 <br></br>
 
                                                                 <fieldset>
-                                                                    <button onClick={(e) => SignInFunction(e)} id="form-submit" className="orange-button"> Update</button>
+                                                                    <button onClick={(e) => SignInFunction(e)} id="form-submit" class="btn btn-primary"> Update</button>
                                                                 </fieldset>
                                                             </div>
 

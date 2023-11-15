@@ -48,7 +48,8 @@ function EditCategorie() {
 
         })
     }
-    const UpDateFunction = (e) => {
+    const SignInFunction = (e) => {
+        console.log("photo",photo)
         e.preventDefault();
         const formData = new FormData();
         formData.append("name", name)
@@ -60,9 +61,9 @@ function EditCategorie() {
 
         //
 
-        CS.update(id, formData).then((res) => {
+        CS.UpdatePhoto(id, formData).then((res) => {
             // console.log("Ok")
-            Swal.fire('The profile is updated!');
+            Swal.fire('The category is updated!');
 
         })
         navigate("/categories")
@@ -262,127 +263,95 @@ function EditCategorie() {
 
 
 
-
-
                         <div className="row">
 
-                            <div className="col-xl-12 stretch-card grid-margin">
-                                <div className="contact-page section">
-                                    <div className="container">
+<div className="col-xl-12 stretch-card grid-margin">
+    <div className="contact-page section">
+        <div className="container">
 
-                                        <div className="col-lg-6">
-                                            <div className="right-content">
-                                                <div className="row">
-                                                    <div className="col-lg-12">
-                                                        <h1> UpDate </h1>
-                                                        <br></br>
-                                                        <br></br>
-                                                        <form id="contact-form" action="" method="post">
-                                                            {/* <div className="i-am-centered"> */}
+            <div className="col-lg-6 offset-3">
+                <div className="right-content">
+                    <div className="row">
+                        <div className="col-lg-12">
+                            <h1>Create category </h1>
+                            <br></br>
+                            <br></br>
+                            <form id="contact-form" action="" method="post">
+                                {/* <div className="i-am-centered"> */}
 
-                                                            <div className="row" >
-                                                                <div className="col-lg-6">
-                                                                    <fieldset>
-                                                                        <input type="name"
-                                                                            name="name" id="name"
-                                                                            placeholder="Your First Name..."
-                                                                            autocomplete="on" required
-                                                                            value={name}
-                                                                            onChange={(e) => setname(e.target.value)}
-                                                                        />
-                                                                    </fieldset>
-                                                                </div>
-                                                                <br></br>
-                                                                <div className="col-lg-6">
-                                                                    <fieldset>
-                                                                        <input type="surname"
-                                                                            name="surname"
-                                                                            id="surname"
-                                                                            placeholder="Your Last Name..."
-                                                                            autocomplete="on" required
-                                                                            value={description}
-                                                                            onChange={(e) => setdescription(e.target.value)}
-
-                                                                        />
-                                                                    </fieldset>
-                                                                </div>
-                                                                <br></br>
-                                                                <div className="col-lg-6">
-                                                                    <fieldset>
-                                                                        <input type="text"
-                                                                            name="email"
-                                                                            id="email"
-                                                                            pattern="[^ @]*@[^ @]*"
-                                                                            placeholder="Your E-mail..."
-                                                                            required=""
-                                                                            value={budget}
-                                                                            onChange={(e) => setbudget(e.target.value)}
-
-                                                                        />
-                                                                    </fieldset>
-                                                                </div>
-                                                                <br></br>
-
-
-
-                                                                {/* <br></br>
-    
+                                <div className="row" >
                                     <div className="col-lg-6">
-                                        <fieldset>
-    
-                                            <input type="file" required="" onChange={onFileChange}
-    
-    
-                                            />
-                                        </fieldset>
-                                    </div> */}
 
-
-
-
-                                                                <br></br>
-                                                                <br></br>
-
-                                                                <div className="col-lg-6">
-                                                                    <fieldset>
-
-                                                                        <input type="file" required="" onChange={onFileChange}
-
-
-                                                                        />
-                                                                    </fieldset>
-                                                                </div>
-
-
-
-
-
-                                                                {/* <div className="col-lg-12">
-                                    <fieldset>
-                                        <textarea name="message" id="message" placeholder="Your Message"></textarea>
-                                    </fieldset>
-                                </div> */}
-                                                                <div className="col-lg-12">
-                                                                    <fieldset>
-                                                                        <button onClick={(e) => UpDateFunction(e)} type="submit" id="form-submit" className="orange-button">Update</button>
-                                                                    </fieldset>
-                                                                </div>
-                                                            </div>
-                                                            {/* </div> */}
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div class="mb-3">
+                                            <label for="formFile" class="form-label">Name</label>
+                                            <input class="form-control" placeholder="name..." type="texte" id="formFile" value={name}
+                                                onChange={(e) => setname(e.target.value)} />
                                         </div>
+                                    </div>
+                                    <br></br>
+                                    <div className="col-lg-6">
 
+
+                                        <div class="mb-3">
+                                            <label for="formFile" class="form-label">Budget</label>
+                                            <input class="form-control" placeholder="Budget..." type="texte" id="formFile" value={budget}
+                                                onChange={(e) => setbudget(e.target.value)} />
+                                        </div>
+                                    </div>
+                                    <br></br>
+                                    <div className="col-lg-6">
+
+                                        <div class="mb-3">
+                                            <label for="formFile" class="form-label">Description</label>
+                                            <input class="form-control" placeholder="Budget..." type="texte" id="formFile" value={description}
+                                                onChange={(e) => setdescription(e.target.value)} />
+                                        </div>
+                                    </div>
+                                    <br></br>
+
+
+
+
+
+
+                                    <br></br>
+                                    <br></br>
+
+                                    <div className="col-lg-6">
+
+
+
+                                        <div class="mb-3">
+                                            <label for="formFile" class="form-label">Photo</label>
+                                            <input class="form-control" type="file" id="formFile" onChange={onFileChange} />
+                                        </div>
                                     </div>
 
+                                
+
+
+
+                                    <div className="col-lg-12">
+                                        <fieldset>
+                                            <button onClick={(e) => SignInFunction(e)} type="submit" id="form-submit" className="btn btn-primary"> Update</button>
+                                        </fieldset>
+                                    </div>
                                 </div>
-
-
-
-                            </div>
+                                {/* </div> */}
+                            </form>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+</div>
+</div>
 
 
                     </div>

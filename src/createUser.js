@@ -253,7 +253,7 @@ function CreateUser() {
                                             <div className="right-content">
                                                 <div className="row">
                                                     <div className="col-lg-12">
-                                                        <h1> Sign In </h1>
+                                                        <h1> Create User </h1>
                                                         <br></br>
                                                         <br></br>
                                                         <form id="contact-form" action="" method="post">
@@ -261,153 +261,106 @@ function CreateUser() {
 
                                                             <div className="row" >
                                                                 <div className="col-lg-6">
-                                                                    <fieldset>
-                                                                        <input type="name"
-                                                                            name="name" id="name"
-                                                                            placeholder="Your First Name..."
-                                                                            autocomplete="on" required
-                                                                            value={firstname}
-                                                                            onChange={(e) => setfirstname(e.target.value)}
-                                                                        />
-                                                                    </fieldset>
-                                                                </div>
-                                                                <br></br>
-                                                                <div className="col-lg-6">
-                                                                    <fieldset>
-                                                                        <input type="surname"
-                                                                            name="surname"
-                                                                            id="surname"
-                                                                            placeholder="Your Last Name..."
-                                                                            autocomplete="on" required
-                                                                            value={lastname}
-                                                                            onChange={(e) => setlastname(e.target.value)}
 
-                                                                        />
-                                                                    </fieldset>
-                                                                </div>
-                                                                <br></br>
-                                                                <div className="col-lg-6">
-                                                                    <fieldset>
-                                                                        <input type="text"
-                                                                            name="email"
-                                                                            id="email"
-                                                                            pattern="[^ @]*@[^ @]*"
-                                                                            placeholder="Your E-mail..."
-                                                                            required=""
-                                                                            value={email}
-                                                                            onChange={(e) => setemail(e.target.value)}
 
-                                                                        />
-                                                                    </fieldset>
+                                                                    <div class="mb-3">
+                                                                        <label for="formFile" class="form-label">First Name</label>
+                                                                        <input class="form-control" placeholder="Your First Name..." type="texte" id="formFile" value={firstname}
+                                                                            onChange={(e) => setfirstname(e.target.value)} />
+                                                                    </div>
+
                                                                 </div>
                                                                 <br></br>
                                                                 <div className="col-lg-6">
-                                                                    <fieldset>
-                                                                        <input type="subject"
-                                                                            name="subject"
-                                                                            id="subject"
-                                                                            placeholder="Your Password..."
-                                                                            autocomplete="on"
-                                                                            required=""
-                                                                            value={password}
+
+                                                                    <div class="mb-3">
+                                                                        <label for="formFile" class="form-label">Last Name</label>
+                                                                        <input class="form-control" placeholder="Your Last Name..." type="texte" id="formFile" value={lastname}
+                                                                            onChange={(e) => setlastname(e.target.value)} />
+                                                                    </div>
+                                                                </div>
+                                                                <br></br>
+                                                                <div className="col-lg-6">
+
+                                                                    <div class="mb-3">
+                                                                        <label for="formFile" class="form-label">Email</label>
+                                                                        <input class="form-control" placeholder="Your Email..." type="email" id="formFile" value={email}
+                                                                            onChange={(e) => setemail(e.target.value)} />
+                                                                    </div>
+                                                                </div>
+                                                                <br></br>
+                                                                <div className="col-lg-6">
+
+
+                                                                    <div class="mb-3">
+                                                                        <label for="formFile" class="form-label">Password</label>
+                                                                        <input class="form-control" placeholder="Your Password..." type="password" id="formFile" value={password}
                                                                             onChange={(e) => setpassword(e.target.value)} />
-                                                                    </fieldset>
+                                                                    </div>
                                                                 </div>
                                                                 <br></br>
                                                                 <div className="col-lg-6">
-                                                                    <fieldset>
-                                                                        <input type="subject"
-                                                                            name="subject"
-                                                                            id="subject"
-                                                                            placeholder="Your CIN..."
-                                                                            autocomplete="on"
-                                                                            required=""
-                                                                            value={cin}
-                                                                            onChange={(e) => setcin(e.target.value)}
 
-                                                                        />
-                                                                    </fieldset>
+
+                                                                    <div class="mb-3">
+                                                                        <label for="formFile" class="form-label">CIN</label>
+                                                                        <input class="form-control" placeholder="Your CIN..." type="text" id="formFile" value={cin}
+                                                                            onChange={(e) => setcin(e.target.value)} />
+                                                                    </div>
                                                                 </div>
                                                                 <br></br>
                                                                 <div className="col-lg-6">
-                                                                    <fieldset>
-                                                                        <input type="subject"
-                                                                            name="subject"
-                                                                            id="subject"
-                                                                            placeholder="Your Phone..."
-                                                                            autocomplete="on"
-                                                                            required=""
-                                                                            value={phone}
-                                                                            onChange={(e) => setphone(e.target.value)}
 
 
-                                                                        />
-                                                                    </fieldset>
+                                                                    <div class="mb-3">
+                                                                        <label for="formFile" class="form-label">Phone</label>
+                                                                        <input class="form-control" placeholder="Your Phone..." type="text" id="formFile" value={phone}
+                                                                            onChange={(e) => setphone(e.target.value)} />
+                                                                    </div>
                                                                 </div>
 
                                                                 <div className="col-lg-6">
-                                                                    <fieldset>
-                                                                        <input type="subject"
-                                                                            name="subject"
-                                                                            id="subject"
-                                                                            placeholder="Your Adress..."
-                                                                            autocomplete="on"
-                                                                            required=""
-                                                                            value={adress}
-                                                                            onChange={(e) => setadress(e.target.value)}
 
 
-                                                                        />
-                                                                    </fieldset>
+                                                                    <div class="mb-3">
+                                                                        <label for="formFile" class="form-label">Adress</label>
+                                                                        <input class="form-control" placeholder="Your Adress..." type="text" id="formFile" value={adress}
+                                                                            onChange={(e) => setadress(e.target.value)} />
+                                                                    </div>
                                                                 </div>
 
 
                                                                 <br></br>
+
+
+
                                                                 <div className="col-lg-6">
-                                                                    <fieldset>
 
 
-                                                                        <label for="cars">Choose a Role:</label>
-                                                                        <select id="cars" name="cars"
-                                                                            value={role}
-                                                                            onChange={(e) => setrole(e.target.value)}
-
-                                                                        >
-                                                                            <option >Role</option>
-                                                                            <option value="admin">Admin</option>
-                                                                            <option value="client">Client</option>
-
-                                                                        </select>
-                                                                    </fieldset>
-
-
-                                                                    {/* <br></br>
-
-                                <div className="col-lg-6">
-                                    <fieldset>
-
-                                        <input type="file" required="" onChange={onFileChange}
-
-
-                                        />
-                                    </fieldset>
-                                </div> */}
-
-
+                                                                    <div class="mb-3">
+                                                                        <label for="formFile" class="form-label">Choisir une photo</label>
+                                                                        <input class="form-control" type="file" id="formFile" onChange={onFileChange} />
+                                                                    </div>
                                                                 </div>
 
+
+
+                                                                <p><div className="col-lg-6">
+                                                                    <select class="form-select" aria-label="Default select example"
+                                                                        value={role}
+                                                                        onChange={(e) => setrole(e.target.value)}
+
+                                                                    >
+                                                                        <option selected>Choose a role</option>
+                                                                        <option value="admin">Admin</option>
+                                                                        <option value="Organizer">Organizer</option>
+                                                                    </select>
+
+                                                                </div>
+                                                                </p>
                                                                 <br></br>
                                                                 <br></br>
 
-                                                                <div className="col-lg-6">
-                                                                    <fieldset>
-
-                                                                        <input type="file" required="" onChange={onFileChange}
-
-
-                                                                        />
-                                                                    </fieldset>
-                                                                </div>
 
 
 
@@ -420,7 +373,7 @@ function CreateUser() {
                             </div> */}
                                                                 <div className="col-lg-12">
                                                                     <fieldset>
-                                                                        <button onClick={(e) => SignInFunction(e)} type="submit" id="form-submit" className="orange-button"> Create</button>
+                                                                        <button onClick={(e) => SignInFunction(e)} type="submit" id="form-submit" className="btn btn-primary"> Create</button>
                                                                     </fieldset>
                                                                 </div>
                                                             </div>

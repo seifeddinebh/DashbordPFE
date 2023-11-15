@@ -36,7 +36,7 @@ function CreateCategorie() {
         formData.append("description", description)
         formData.append("budget", budget)
         formData.append("photo", photo)
-      //  formData.append("ListOfEvents", query1)
+        //  formData.append("ListOfEvents", query1)
 
 
 
@@ -234,7 +234,7 @@ function CreateCategorie() {
                 <div className="main-panel">
                     <div className="content-wrapper pb-0">
                         <div className="page-header flex-wrap">
-                            <div className="header-left">
+                            <div className="header-left center">
                                 <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new User </button>
                                 <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new Categorie </button>
                                 <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new Event </button>
@@ -257,7 +257,7 @@ function CreateCategorie() {
                                 <div className="contact-page section">
                                     <div className="container">
 
-                                        <div className="col-lg-6">
+                                        <div className="col-lg-6 offset-3">
                                             <div className="right-content">
                                                 <div className="row">
                                                     <div className="col-lg-12">
@@ -269,44 +269,31 @@ function CreateCategorie() {
 
                                                             <div className="row" >
                                                                 <div className="col-lg-6">
-                                                                    <fieldset>
-                                                                        <input type="name"
-                                                                            name="name" id="name"
-                                                                            placeholder="Your  Name..."
-                                                                            autocomplete="on" required
-                                                                            value={name}
-                                                                            onChange={(e) => setname(e.target.value)}
-                                                                        />
-                                                                    </fieldset>
+
+                                                                    <div class="mb-3">
+                                                                        <label for="formFile" class="form-label">Name</label>
+                                                                        <input class="form-control" placeholder="name..." type="texte" id="formFile" value={name}
+                                                                            onChange={(e) => setname(e.target.value)} />
+                                                                    </div>
                                                                 </div>
                                                                 <br></br>
                                                                 <div className="col-lg-6">
-                                                                    <fieldset>
-                                                                        <input type="surname"
-                                                                            name="surname"
-                                                                            id="surname"
-                                                                            placeholder="Your budget..."
-                                                                            autocomplete="on" required
-                                                                            value={budget}
-                                                                            onChange={(e) => setbudget(e.target.value)}
 
-                                                                        />
-                                                                    </fieldset>
+
+                                                                    <div class="mb-3">
+                                                                        <label for="formFile" class="form-label">Budget</label>
+                                                                        <input class="form-control" placeholder="Budget..." type="texte" id="formFile" value={budget}
+                                                                            onChange={(e) => setbudget(e.target.value)} />
+                                                                    </div>
                                                                 </div>
                                                                 <br></br>
                                                                 <div className="col-lg-6">
-                                                                    <fieldset>
-                                                                        <input type="text"
-                                                                            name="email"
-                                                                            id="email"
 
-                                                                            placeholder="Your Description..."
-                                                                            required=""
-                                                                            value={description}
-                                                                            onChange={(e) => setdescription(e.target.value)}
-
-                                                                        />
-                                                                    </fieldset>
+                                                                    <div class="mb-3">
+                                                                        <label for="formFile" class="form-label">Description</label>
+                                                                        <input class="form-control" placeholder="Budget..." type="texte" id="formFile" value={description}
+                                                                            onChange={(e) => setdescription(e.target.value)} />
+                                                                    </div>
                                                                 </div>
                                                                 <br></br>
 
@@ -331,13 +318,13 @@ function CreateCategorie() {
                                                                 <br></br>
 
                                                                 <div className="col-lg-6">
-                                                                    <fieldset>
-
-                                                                        <input type="file" required="" onChange={onFileChange}
 
 
-                                                                        />
-                                                                    </fieldset>
+
+                                                                    <div class="mb-3">
+                                                                        <label for="formFile" class="form-label">Photo</label>
+                                                                        <input class="form-control" type="file" id="formFile" onChange={onFileChange} />
+                                                                    </div>
                                                                 </div>
 
                                                                 {/* <div className="col-lg-6">
@@ -362,10 +349,10 @@ function CreateCategorie() {
 
 
 
-                                                               
+
                                                                 <div className="col-lg-12">
                                                                     <fieldset>
-                                                                        <button onClick={(e) => SignInFunction(e)} type="submit" id="form-submit" className="orange-button"> Create</button>
+                                                                        <button onClick={(e) => SignInFunction(e)} type="submit" id="form-submit" className="btn btn-primary"> Create</button>
                                                                     </fieldset>
                                                                 </div>
                                                             </div>

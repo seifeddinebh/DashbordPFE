@@ -32,6 +32,7 @@ function Login() {
                 localStorage.setItem("resultID", res.data.message.user._id);// cha3malna behom resultID
                 localStorage.setItem("resultToken", res.data.message.token);// cha3malna behom tesultToken
                 localStorage.setItem("Nom", res.data.message.user.firstname);// cha3malna behom tesultToken
+               // localStorage.setItem("photo",res.data.data.user.photo)
                 //  alert(resultID);
 
                 console.log("*******res.data.message.user******", res.data.message.user)
@@ -53,11 +54,17 @@ function Login() {
 
         <div className="contact-page section">
             <div className="container">
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
 
-                <div className="col-lg-6">
+                <div className="col-lg-8 offset-4">
                     <div className="right-content">
                         <div className="row">
-                            <div className="col-lg-12">
+                            <div className="col-lg-6">
                                 <h1> Login </h1>
                                 <br></br>
                                 <br></br>
@@ -65,40 +72,30 @@ function Login() {
                                     <div className="row">
 
                                         <div className="row">
-                                            <div className="col-lg-6">
-                                                <fieldset>
-                                                    <input type="text"
-                                                        name="email" id="email"
-                                                        pattern="[^ @]*@[^ @]*"
-                                                        placeholder="Your E-mail..." required=""
-                                                        value={email}
-                                                        onChange={(e) => setemail(e.target.value)}
 
-                                                    />
-                                                </fieldset>
+
+                                            <div class="mb-3">
+                                                <label for="formFile" class="form-label">Email</label>
+                                                <input class="form-control" placeholder="email..." type="email" id="formFile" value={email}
+                                                    onChange={(e) => setemail(e.target.value)} />
                                             </div>
 
                                         </div>
 
                                         <br></br>
                                         <div className="row">
-                                            <div className="col-lg-6">
-                                                <fieldset>
-                                                    <input type="subject"
-                                                        name="subject" id="subject" placeholder="Your Password..."
-                                                        value={password}
-                                                        // autocomplete="on"
-                                                        onChange={(e) => setpassword(e.target.value)}
 
-                                                    />
-                                                </fieldset>
+                                            <div class="mb-3">
+                                                <label for="formFile" class="form-label">Password</label>
+                                                <input class="form-control" placeholder="Password..." type="password" id="formFile" value={password}
+                                                    onChange={(e) => setpassword(e.target.value)} />
                                             </div>
                                         </div>
 
 
                                         <div className="col-lg-12">
                                             <fieldset>
-                                                <button onClick={(e) => LoginFunction(e)} id="form-submit" className="orange-button">Login</button>
+                                                <button onClick={(e) => LoginFunction(e)} id="form-submit" className="btn btn-primary">Login</button>
                                             </fieldset>
                                         </div>
                                     </div>
@@ -109,8 +106,13 @@ function Login() {
                     </div>
                 </div>
 
-                <Footer></Footer>
+
             </div>
+            <br></br>
+            <br></br>
+            <br></br>
+
+            {/* <Footer></Footer> */}
         </div>
     )
 }

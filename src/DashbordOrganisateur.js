@@ -239,16 +239,14 @@ function DashboardOrganisateur() {
                             </li>
                         </ul>
                         <ul className="navbar-nav navbar-nav-right">
-                            <li className="nav-item nav-logout d-none d-md-block me-3">
+                            <li className="nav-item nav-logout d-none d-md-block me-3 ">
                                 <a className="nav-link" href="#">Dashbord Organisateur</a>
                             </li>
-                            <li className="nav-item nav-logout d-none d-md-block">
-                                <button className="btn btn-sm btn-danger">Trailing</button>
-                            </li>
+
                             <li className="nav-item nav-profile dropdown d-none d-md-block">
                                 <a className="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown"
                                     aria-expanded="false">
-                                    <div className="nav-profile-text">English </div>
+                                    <div className="nav-profile-text btn-danger">Compte </div>
                                 </a>
                                 <div className="dropdown-menu center navbar-dropdown" aria-labelledby="profileDropdown">
                                     <a className="dropdown-item" onClick={(e) => profileFN(iduser)}>
