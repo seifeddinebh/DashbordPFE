@@ -1,73 +1,119 @@
 import React, { useEffect, useState } from "react";
-import Footer from "./footer";
-import Navbar from "./navbar";
-import { useNavigate } from "react-router-dom";
-import CategorieService from "./services/CategorieService";
-import EventService from "./services/EventService";
-import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
+import Footer from "../Dashbord/footer";
+import Navbar from "../Dashbord/navbar";
+import { Link, useNavigate } from "react-router-dom";
+import LoginService from "../../services/LoginService"
+import EventService from "../../services/EventService";
 
-function CreateCategorie() {
+function DashboardOrganisateur() {
+    const [iduser, setiduser] = useState("")
 
+    const [query, setquery] = useState("")
+    const [events, setEvents] = useState([])
 
-    const [categories, setCategories] = useState("");
-    const [id, setId] = useState("")
-    const [name, setname] = useState("");
-    const [description, setdescription] = useState("");
-    const [budget, setbudget] = useState("");
-    const [photo, setphoto] = useState("");
-    const [dispoList, setdispoList] = useState([]);
-    const [query1, setquery1] = useState("")
-    const onFileChange = event => {
-        setphoto(event.target.files[0]);
-    };
+    const LS = new LoginService()
+    const ES = new EventService()
 
-    const navigate = useNavigate()
-    const CS = new CategorieService();
-    const ES = new EventService();
-
-    const SignInFunction = (e) => {
-        e.preventDefault();
+    const navigate = useNavigate();
 
 
-        //alert(query1)
-        const formData = new FormData();
-        formData.append("name", name)
-        formData.append("description", description)
-        formData.append("budget", budget)
-        formData.append("photo", photo)
-        //  formData.append("ListOfEvents", query1)
-
-
-
-
-
-        CS.create(formData).then((res) => {
-            console.log(res.data.data)
-        })
-        navigate("/categories")
-    }
 
     useEffect(() => {
+        setiduser(localStorage.getItem("resultID"))
 
-        ES.getAll().then((res) => {
-
-            console.log("Liste des evenements ", res.data.data);
-            setdispoList(res.data.data);
-
-        })
+        AllEvents(localStorage.getItem("resultID"))
 
     }, [])
+    const AllEvents = (iduser) => {
+        ES.FindByOrganiser(iduser).then((res) => {
+
+            console.log("Liste des events avec id organisateur", res.data.data);
+            setEvents(res.data.data);
+
+        })
+    }
+
+
+    const CreatePage = () => {
+        alert("Vers Create Page")
+        //navigation vers la page eventdaetail/id
+        navigate("/createUser")
+    }
+
+    const CreateCategorie = () => {
+        alert("Vers Create Create Categorie")
+        //navigation vers la page eventdaetail/id
+        navigate("/createCategorie")
+    }
+
+    const CreateEvent = () => {
+        alert("Vers Create Create Event")
+        //navigation vers la page eventdaetail/id
+        navigate("/cerateEventOrganisateur")
+    }
+
+    const logoutFN = (id) => {
+
+        alert("Logout ")
+        LS.Logout(id).then((res) => {
+            console.log("result ", res)
+            localStorage.removeItem("resultID");
+            localStorage.removeItem("resultToken");
+            console.log("id apres logout", localStorage.getItem("resultID"))
+            console.log("token apres logout", localStorage.getItem("resultToken"))
+            navigate("/")
+
+        })
+    }
+
+    const settingFN = (id) => {
+
+        navigate("/UpDateProfile/" + id, { state: { id: id } })
+    }
+    const profileFN = (id) => {
+
+        navigate("/registerDetails/" + id, { state: { id: id } })
 
 
 
+
+    }
+
+    // const viewDetailsfunction = (id) => {
+    //     alert("bonjour")
+    //     //navigation vers la page eventdaetail/id
+    //     navigate("/AfficheDetailsEventOrganizer/" + id, { state: { id: id } })
+    // }
+
+    const detialFN = (id) => {
+        navigate("/AfficheDetailsEventOrganizer/" + id, { state: { id: id } })
+    }
     return (
 
 
         <div className="container-scroller">
+            {/* <div className="row p-0 m-0 proBanner" id="proBanner">
+                <div className="col-md-12 p-0 m-0">
+                    <div className="card-body card-body-padding d-flex align-items-center justify-content-between">
+                        <div className="ps-lg-1">
+                            <div className="d-flex align-items-center justify-content-between">
+                                <p className="mb-0 font-weight-medium me-3 buy-now-text">Free 24/7 customer support, updates, and more with
+                                    this template!</p>
+                                <a href="https://www.bootstrapdash.com/product/plus-admin-template/?utm_source=organic&utm_medium=banner&utm_campaign=buynow_demo"
+                                    target="_blank" className="btn me-2 buy-now-btn border-0">Get Pro</a>
+                            </div>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-between">
+                            <a href="https://www.bootstrapdash.com/product/plus-admin-template/"><i
+                                className="mdi mdi-home me-3 text-white"></i></a>
+                            <button id="bannerClose" className="btn border-0 p-0">
+                                <i className="mdi mdi-close text-white me-0"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div> */}
 
-
-            <Navbar />
 
             <div className="container-fluid page-body-wrapper">
 
@@ -193,36 +239,29 @@ function CreateCategorie() {
                             </li>
                         </ul>
                         <ul className="navbar-nav navbar-nav-right">
-                            <li className="nav-item nav-logout d-none d-md-block me-3">
-                                <a className="nav-link" href="#">Status</a>
+                            <li className="nav-item nav-logout d-none d-md-block me-3 ">
+                                <a className="nav-link" href="#">Dashbord Organisateur</a>
                             </li>
-                            <li className="nav-item nav-logout d-none d-md-block">
-                                <button className="btn btn-sm btn-danger">Trailing</button>
-                            </li>
+
                             <li className="nav-item nav-profile dropdown d-none d-md-block">
                                 <a className="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown"
                                     aria-expanded="false">
-                                    <div className="nav-profile-text">English </div>
+                                    <div className="nav-profile-text btn-danger">Compte </div>
                                 </a>
                                 <div className="dropdown-menu center navbar-dropdown" aria-labelledby="profileDropdown">
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-bl me-3"></i> French </a>
+                                    <a className="dropdown-item" onClick={(e) => profileFN(iduser)}>
+                                        <i className="mdi mdi-account"></i> Profile </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-cn me-3"></i> Chinese </a>
+                                    <a className="dropdown-item" onClick={(e) => settingFN(iduser)}>
+                                        <i className="mdi mdi-home-circle"></i> settings </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-de me-3"></i> German </a>
+                                    <a className="dropdown-item" onClick={(e) => logoutFN(iduser)}>
+                                        <i className="mdi mdi-account-key"></i> Logout </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-ru me-3"></i>Russian </a>
+
                                 </div>
                             </li>
-                            <li className="nav-item nav-logout d-none d-lg-block">
-                                <a className="nav-link" href="index.html">
-                                    <i className="mdi mdi-home-circle"></i>
-                                </a>
-                            </li>
+
                         </ul>
                         <button className="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
                             data-toggle="offcanvas">
@@ -234,143 +273,48 @@ function CreateCategorie() {
                 <div className="main-panel">
                     <div className="content-wrapper pb-0">
                         <div className="page-header flex-wrap">
-                            <div className="header-left center">
-                                <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new User </button>
-                                <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new Categorie </button>
-                                <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new Event </button>
+                            <div className="header-left">
 
+                                <button className="btn btn-primary mb-2 mb-md-0 me-2" onClick={(e) => CreateEvent()}> Create new Event </button>
+                                <button className="btn btn-primary mb-2 mb-md-0 me-2" onClick={(e) => navigate("/AfficheEventOrganizer")}> Voir Tous les evenements </button>
                             </div>
 
                         </div>
-                        <br></br>
-                        <br></br>
-                        <br></br>
 
 
 
 
-
-
-                        <div className="row">
-
-                            <div className="col-xl-12 stretch-card grid-margin">
-                                <div className="contact-page section">
-                                    <div className="container">
-
-                                        <div className="col-lg-6 offset-3">
-                                            <div className="right-content">
-                                                <div className="row">
-                                                    <div className="col-lg-12">
-                                                        <h1>Create category </h1>
-                                                        <br></br>
-                                                        <br></br>
-                                                        <form id="contact-form" action="" method="post">
-                                                            {/* <div className="i-am-centered"> */}
-
-                                                            <div className="row" >
-                                                                <div className="col-lg-6">
-
-                                                                    <div class="mb-3">
-                                                                        <label for="formFile" class="form-label">Name</label>
-                                                                        <input class="form-control" placeholder="name..." type="texte" id="formFile" value={name}
-                                                                            onChange={(e) => setname(e.target.value)} />
-                                                                    </div>
-                                                                </div>
-                                                                <br></br>
-                                                                <div className="col-lg-6">
-
-
-                                                                    <div class="mb-3">
-                                                                        <label for="formFile" class="form-label">Budget</label>
-                                                                        <input class="form-control" placeholder="Budget..." type="texte" id="formFile" value={budget}
-                                                                            onChange={(e) => setbudget(e.target.value)} />
-                                                                    </div>
-                                                                </div>
-                                                                <br></br>
-                                                                <div className="col-lg-6">
-
-                                                                    <div class="mb-3">
-                                                                        <label for="formFile" class="form-label">Description</label>
-                                                                        <input class="form-control" placeholder="Budget..." type="texte" id="formFile" value={description}
-                                                                            onChange={(e) => setdescription(e.target.value)} />
-                                                                    </div>
-                                                                </div>
-                                                                <br></br>
+                        <h1>Toutes les événemments crées par cet organisateur</h1>
 
 
 
-                                                                {/* <br></br>
+                        {events.map((event) => (
 
-                                <div className="col-lg-6">
-                                    <fieldset>
+                            <div style={{ display: "inline-flex" }}>
 
-                                        <input type="file" required="" onChange={onFileChange}
-
-
-                                        />
-                                    </fieldset>
-                                </div> */}
-
-
-
-
-                                                                <br></br>
-                                                                <br></br>
-
-                                                                <div className="col-lg-6">
-
-
-
-                                                                    <div class="mb-3">
-                                                                        <label for="formFile" class="form-label">Photo</label>
-                                                                        <input class="form-control" type="file" id="formFile" onChange={onFileChange} />
-                                                                    </div>
-                                                                </div>
-
-                                                                {/* <div className="col-lg-6">
-                                                                    <fieldset>
-
-
-                                                                        <label for="cars">Events:</label>
-
-
-
-                                                                        <select style={{ backgroundColor: "white", borderRadius: "12%" }} id="cars" onChange={e => setquery1(e.target.value)} >
-                                                                            {dispoList.map((dispo) => (
-                                                                                <option> {dispo.name}</option>
-                                                                            ))}
-                                                                        </select>
-                                                                    </fieldset>
-
-
-                                                                </div> */}
-
-
-
-
-
-
-                                                                <div className="col-lg-12">
-                                                                    <fieldset>
-                                                                        <button onClick={(e) => SignInFunction(e)} type="submit" id="form-submit" className="btn btn-primary"> Create</button>
-                                                                    </fieldset>
-                                                                </div>
-                                                            </div>
-                                                            {/* </div> */}
-                                                        </form>
-                                                    </div>
-                                                </div>
+                                <div className="col-lg-12 stretch-card grid-margin">
+                                    <div className="card" onClick={e => { detialFN(event._id) }}>
+                                        <div className="card-body p-0">
+                                            <img src={`http://localhost:3000/storages/${event.photo}`} style={{ width: 350, height: 460 }} alt="" />
+                                        </div>
+                                        <div className="card-body px-3 text-dark">
+                                            <div className="d-flex justify-content-between">
+                                                <p className="text-muted font-13 mb-0">{event.name}</p>
+                                                <i className="mdi mdi-heart-outline"></i>
+                                            </div>
+                                            <h5 className="font-weight-semibold">{event.description}  </h5>
+                                            <div className="d-flex justify-content-between font-weight-semibold">
+                                                <p className="mb-0">
+                                                    <i className="mdi mdi-star star-color pe-1"></i>{event.localisation} (35)
+                                                </p>
+                                                <p className="mb-0">{event.budget}</p>
                                             </div>
                                         </div>
-
                                     </div>
-
                                 </div>
-
-
-
                             </div>
-                        </div>
+                        ))}
+
 
 
                     </div>
@@ -384,6 +328,7 @@ function CreateCategorie() {
         </div >
 
     )
-
 }
-export default CreateCategorie
+
+export default DashboardOrganisateur
+

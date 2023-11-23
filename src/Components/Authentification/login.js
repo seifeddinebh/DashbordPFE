@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Footer from "./footer";
+import Footer from "../Dashbord/footer";
 //import UserService from "../services/UserService";
-import LoginService from "../src/services/LoginService";
+import LoginService from "../../services/LoginService";
 import { useNavigate } from "react-router-dom";
 
 
@@ -32,7 +32,7 @@ function Login() {
                 localStorage.setItem("resultID", res.data.message.user._id);// cha3malna behom resultID
                 localStorage.setItem("resultToken", res.data.message.token);// cha3malna behom tesultToken
                 localStorage.setItem("Nom", res.data.message.user.firstname);// cha3malna behom tesultToken
-               // localStorage.setItem("photo",res.data.data.user.photo)
+                // localStorage.setItem("photo",res.data.data.user.photo)
                 //  alert(resultID);
 
                 console.log("*******res.data.message.user******", res.data.message.user)

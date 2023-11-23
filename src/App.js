@@ -1,32 +1,32 @@
 import './App.css';
 import { Fragment } from 'react';
-import { Home } from "./home"
+import { Home } from "./Components/Dashbord/home"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Events from './events';
-import Categories from './categories';
-import Users from './users';
-import Footer from './footer';
-import Navbar from './navbar';
-import Details from './details';
-import CreateUser from './createUser';
-import EditUser from './editUser';
-import DetailsCategorie from './detailsCategorie';
-import CreateCategorie from './createCategorie';
-import EditCategorie from './editCategorie';
-import AddEvent from './AddEvent';
-import CreateEvent from './createEvents';
-import AfficheEvent from './AfficheEvent';
-import ModifierEvent from './modifierEvent';
-import Login from './login';
-import Register from './register';
-import DashboardOrganisateur from './DashbordOrganisateur';
-import CreateEventOrganisateur from './createEventOrganisateur';
-import AfficheEventOrganizer from './AfficheEventsOrganizer';
-import AfficheDetailsEventOrganizer from './AfficheDetailsEventOrganizer';
-import RegisterDetails from "./RegisterDetails"
-import Logout from './Logout';
-import UpDateProfile from './UpDateProfile';
-import UpDateEventOrganizer from './UpDateEventOrganiser';
+import Events from './Components/Events/events';
+import Categories from './Components/Cathegorie/categories';
+import Users from './Components/User/users';
+import Footer from './Components/Dashbord/footer';
+import Navbar from './Components/Dashbord/navbar';
+import Details from './Components/Authentification/details';
+import CreateUser from './Components/User/createUser';
+import EditUser from './Components/User/editUser';
+import DetailsCategorie from './Components/Cathegorie/detailsCategorie';
+import CreateCategorie from './Components/Cathegorie/createCategorie';
+import EditCategorie from './Components/Cathegorie/editCategorie';
+import AddEvent from './Components/Events/AddEvent';
+import CreateEvent from './Components/Events/createEvents';
+import AfficheEvent from './Components/Events/AfficheEvent';
+import ModifierEvent from './Components/Events/modifierEvent';
+import Login from './Components/Authentification/login';
+import Register from './Components/Authentification/register';
+import DashboardOrganisateur from './Components/DashbordOrganizer/DashbordOrganisateur';
+import CreateEventOrganisateur from './Components/DashbordOrganizer/createEventOrganisateur';
+import AfficheEventOrganizer from './Components/DashbordOrganizer/AfficheEventsOrganizer';
+import AfficheDetailsEventOrganizer from './Components/DashbordOrganizer/AfficheDetailsEventOrganizer';
+import RegisterDetails from "./Components/User/DetailsUser"
+import Logout from './Components/Authentification/Logout';
+import UpDateProfile from './Components/Authentification/UpDateProfile';
+import UpDateEventOrganizer from './Components/DashbordOrganizer/UpDateEventOrganiser';
 
 
 

@@ -1,9 +1,9 @@
 
 import Swal from "sweetalert2";
-import Footer from "./footer";
-import Navbar from "./navbar";
+import Footer from "../Dashbord/footer";
+import Navbar from "../Dashbord/navbar";
 import React, { useState, useEffect } from "react";
-import UserService from "./services/UserService";
+import UserService from "../../services/UserService";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 //import { Navbar } from "react-bootstrap";
@@ -78,6 +78,23 @@ function EditUser() {
 
     }
 
+    const CreatePage = () => {
+        alert("Vers Create Page")
+        //navigation vers la page eventdaetail/id
+        navigate("/createUser")
+    }
+
+    const CreateCategorie = () => {
+        alert("Vers Create Create Categorie")
+        //navigation vers la page eventdaetail/id
+        navigate("/createCategorie")
+    }
+
+    const CreateEvent = () => {
+        alert("Vers Create Create Event")
+        //navigation vers la page eventdaetail/id
+        navigate("/createEvent")
+    }
 
 
     return (
@@ -90,7 +107,7 @@ function EditUser() {
 
             <div className="container-fluid page-body-wrapper">
 
-                <div id="settings-trigger"><i className="mdi mdi-settings"></i></div>
+            <div id="settings-trigger"><i className="mdi mdi-settings"></i></div>
                 <div id="theme-settings" className="settings-panel">
                     <i className="settings-close mdi mdi-close"></i>
                     <p className="settings-heading">SIDEBAR SKINS</p>
@@ -212,36 +229,29 @@ function EditUser() {
                             </li>
                         </ul>
                         <ul className="navbar-nav navbar-nav-right">
-                            <li className="nav-item nav-logout d-none d-md-block me-3">
-                                <a className="nav-link" href="#">Status</a>
+                            <li className="nav-item nav-logout d-none d-md-block me-3 ">
+                                <a className="nav-link" href="#">Dashbord Organisateur</a>
                             </li>
-                            <li className="nav-item nav-logout d-none d-md-block">
-                                <button className="btn btn-sm btn-danger">Trailing</button>
-                            </li>
+
                             <li className="nav-item nav-profile dropdown d-none d-md-block">
                                 <a className="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown"
                                     aria-expanded="false">
-                                    <div className="nav-profile-text">English </div>
+                                    <div className="nav-profile-text btn-danger">Compte </div>
                                 </a>
                                 <div className="dropdown-menu center navbar-dropdown" aria-labelledby="profileDropdown">
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-bl me-3"></i> French </a>
+                                    <a className="dropdown-item" onClick={(e) => profileFN(iduser)}>
+                                        <i className="mdi mdi-account"></i> Profile </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-cn me-3"></i> Chinese </a>
+                                    <a className="dropdown-item" onClick={(e) => settingFN(iduser)}>
+                                        <i className="mdi mdi-home-circle"></i> settings </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-de me-3"></i> German </a>
+                                    <a className="dropdown-item" onClick={(e) => logoutFN(iduser)}>
+                                        <i className="mdi mdi-account-key"></i> Logout </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-ru me-3"></i>Russian </a>
+
                                 </div>
                             </li>
-                            <li className="nav-item nav-logout d-none d-lg-block">
-                                <a className="nav-link" href="index.html">
-                                    <i className="mdi mdi-home-circle"></i>
-                                </a>
-                            </li>
+
                         </ul>
                         <button className="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
                             data-toggle="offcanvas">
@@ -249,14 +259,13 @@ function EditUser() {
                         </button>
                     </div>
                 </nav>
-
                 <div className="main-panel">
                     <div className="content-wrapper pb-0">
-                        <div className="page-header flex-wrap">
+                    <div className="page-header flex-wrap">
                             <div className="header-left">
-                                <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new User </button>
-                                <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new Categorie </button>
-                                <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new Event </button>
+                                <button className="btn btn-primary mb-2 mb-md-0 me-2" onClick={(e) => CreatePage()}> Create new User </button>
+                                <button className="btn btn-primary mb-2 mb-md-0 me-2" onClick={(e) => CreateCategorie()}> Create new Categorie </button>
+                                <button className="btn btn-primary mb-2 mb-md-0 me-2" onClick={(e) => CreateEvent()}> Create new Event </button>
 
                             </div>
 
@@ -280,7 +289,7 @@ function EditUser() {
                                             <div className="right-content">
                                                 <div className="row">
                                                     <div className="col-lg-12">
-                                                        <h1> Create User </h1>
+                                                        <h1> Update User </h1>
                                                         <br></br>
                                                         <br></br>
                                                         <form id="contact-form" action="" method="post">

@@ -1,90 +1,58 @@
+import React from "react";
+import Footer from "../Dashbord/footer";
+import Navbar from "../Dashbord/navbar";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
 
-import { getAllByAltText } from "@testing-library/react";
-import Footer from "./footer";
-import Navbar from "./navbar";
-import UserService from "./services/UserService"
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2"
-function Users() {
-
-    const navigate = useNavigate()
+import CategorieService from "../../services/CategorieService";
 
 
+function DetailsCategorie() {
+
+    const location = useLocation()
+    const CS = new CategorieService();
+    const navigate = useNavigate();
+
+    const [categories, setCategories] = useState("");
+    const [id, setId] = useState("")
+    const [name, setname] = useState("");
+    const [description, setdescription] = useState("");
+    const [budget, setbudget] = useState("");
+    const [photo, setphoto] = useState("");
+    const [ListOfEvents, setListOfEvents] = useState([])
 
 
-    const CreatePage = () => {
-        alert("Vers Create Page")
-        //navigation vers la page eventdaetail/id
-        navigate("/createUser")
+    useEffect(() => {// Reexpliquer
+        console.log("ok id ", location.state.id);
+        setId(location.state.id);//??
+        getUserById(location.state.id);//?? name(x) name(saif)
+    }, []);
+    const getUserById = (id) => {
+        console.log("id", id);
+        if (id != null) {
+            CS.GetOne(id).then((res) => {
+                //
+                console.log("detailss", res.data.data);
+                if (res.data.data) {
+                    setCategories(res.data.data);
+
+                    setname(res.data.data.name);
+                    setdescription(res.data.data.description);
+                    setbudget(res.data.data.budget)
+                    setphoto(res.data.data.photo);
+                    setListOfEvents(res.data.data.ListOfEvents)
+
+
+
+
+                }
+
+            })
+        }
+
+        //  else { navigate("/login") }
     }
-
-    const CreateCategorie = () => {
-        alert("Vers Create Create Categorie")
-        //navigation vers la page eventdaetail/id
-        navigate("/createCategorie")
-    }
-
-    const CreateEvent = () => {
-        alert("Vers Create Create Event")
-        //navigation vers la page eventdaetail/id
-        navigate("/createEvent")
-    }
-
-
-
-    const US = new UserService();
-    const [users, setUsers] = useState([])
-
-
-
-    useEffect(() => {
-
-        AllUsers()
-
-    }, [])
-    const AllUsers = () => {
-        US.getAll().then((res) => {
-
-            console.log("Liste des Users ", res.data.data);
-            setUsers(res.data.data);
-
-        })
-    }
-
-    const Afficher = (id) => {
-        alert("Afficher")
-        //navigation vers la page eventdaetail/id
-        navigate("/details/" + id, { state: { id: id } })
-    }
-    const Modifier = (id) => {
-        alert("Modifier")
-
-        navigate("/editUser/" + id, { state: { id: id } })
-    }
-    const Supprimer = (id) => {
-        console.log("ok supprimer", id);
-        Swal.fire({
-            title: "Vous-êtez sûr??",
-            text: "Vous ne pourrez pas revenir en arrière!",
-            icon: "avertissement",
-            showCancelButton: true,
-            confirmButtonColor: "#3085D6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Oui, supprimez-le!",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                US.remove(id).then((res) => {
-                    console.log(res.status);
-                    console.log("resposne", res);
-                    if (res.status === 200) {
-                        AllUsers()
-                        Swal.fire("Supprimé!", "Votre fichier a été supprimé.", "Succès");
-                    }
-                });
-            }
-        });
-    };
 
 
 
@@ -96,10 +64,11 @@ function Users() {
 
 
             <Navbar />
+            <br></br>
 
             <div className="container-fluid page-body-wrapper">
 
-                <div id="settings-trigger"><i className="mdi mdi-settings"></i></div>
+            <div id="settings-trigger"><i className="mdi mdi-settings"></i></div>
                 <div id="theme-settings" className="settings-panel">
                     <i className="settings-close mdi mdi-close"></i>
                     <p className="settings-heading">SIDEBAR SKINS</p>
@@ -221,36 +190,29 @@ function Users() {
                             </li>
                         </ul>
                         <ul className="navbar-nav navbar-nav-right">
-                            <li className="nav-item nav-logout d-none d-md-block me-3">
-                                <a className="nav-link" href="#">Status</a>
+                            <li className="nav-item nav-logout d-none d-md-block me-3 ">
+                                <a className="nav-link" href="#">Dashbord Organisateur</a>
                             </li>
-                            <li className="nav-item nav-logout d-none d-md-block">
-                                <button className="btn btn-sm btn-danger">Trailing</button>
-                            </li>
+
                             <li className="nav-item nav-profile dropdown d-none d-md-block">
                                 <a className="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown"
                                     aria-expanded="false">
-                                    <div className="nav-profile-text">English </div>
+                                    <div className="nav-profile-text btn-danger">Compte </div>
                                 </a>
                                 <div className="dropdown-menu center navbar-dropdown" aria-labelledby="profileDropdown">
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-bl me-3"></i> French </a>
+                                    <a className="dropdown-item" onClick={(e) => profileFN(iduser)}>
+                                        <i className="mdi mdi-account"></i> Profile </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-cn me-3"></i> Chinese </a>
+                                    <a className="dropdown-item" onClick={(e) => settingFN(iduser)}>
+                                        <i className="mdi mdi-home-circle"></i> settings </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-de me-3"></i> German </a>
+                                    <a className="dropdown-item" onClick={(e) => logoutFN(iduser)}>
+                                        <i className="mdi mdi-account-key"></i> Logout </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-ru me-3"></i>Russian </a>
+
                                 </div>
                             </li>
-                            <li className="nav-item nav-logout d-none d-lg-block">
-                                <a className="nav-link" href="index.html">
-                                    <i className="mdi mdi-home-circle"></i>
-                                </a>
-                            </li>
+
                         </ul>
                         <button className="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
                             data-toggle="offcanvas">
@@ -258,123 +220,39 @@ function Users() {
                         </button>
                     </div>
                 </nav>
-
+                <br></br><br></br>
+                <br></br><br></br>
+                <br></br><br></br>
                 <div className="main-panel">
-                    <div className="content-wrapper pb-0">
-                        <div className="page-header flex-wrap">
-                            <div className="header-left">
-                                <button className="btn btn-primary mb-2 mb-md-0 me-2" onClick={(e) => CreatePage()}> Create new User </button>
-                                <button className="btn btn-primary mb-2 mb-md-0 me-2" onClick={(e) => CreateCategorie()}> Create new Categorie </button>
-                                <button className="btn btn-primary mb-2 mb-md-0 me-2" onClick={(e) => CreateEvent()}> Create new Event </button>
-
-                            </div>
-
-                        </div>
-                        <br></br>
-                        <br></br>
-                        <br></br>
+                    <div class="row">
+                        <div class="col-lg-6 offset-3">
+                            <div class="card mb-5">
+                                <div class="card-body text-center">
 
 
 
+                                    <img src={`http://localhost:3000/storages/${categories.photo}`} alt="" />
+                                    <h5 class="my-3">{name}</h5>
+                                    <p class="text-muted mb-1">{budget}</p>
+                                    <p class="text-muted mb-1">{description}</p>
+                                    <p class="text-muted mb-1">{ListOfEvents.map((event) => (
+                                        <li key={event._id}>{event.name}</li>
+                                    ))}</p>
 
 
 
-                        <div className="row">
 
-                            <div className="col-xl-12 stretch-card grid-margin">
-                                <div className="card">
-                                    <div className="card-body pb-0">
-                                        <h4 className="card-title mb-0">List Of Users</h4>
-                                    </div>
-                                    <br></br>
-                                    <br></br>
-                                    <div className="card-body p-0">
-                                        <div className="table-responsive">
-                                            <table className="table custom-table text-dark">
-                                                <thead>
-                                                    <tr>
-                                                        <th>First Name</th>
-                                                        <th>Last Name</th>
-                                                        <th>Email</th>
-                                                        <th>Phone</th>
-                                                        <th>Role</th>
-                                                        <th>Adress</th>
-
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-
-                                                    {users.map((user) => (
-                                                        <tr>
-                                                            <td>
-                                                                {/* <img src="../assets/images/faces/face2.jpg" className="me-2" alt="image" />  */}
-                                                                <img src={`http://localhost:3000/storages/${user.photo}`} alt="" />{user.firstname}
-                                                            </td>
-                                                            <td>
-                                                                <div className="d-flex">
-                                                                    <span className="pe-2 d-flex align-items-center">{user.lastname}</span>
-
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div className="d-flex">
-                                                                    <span className="pe-2 d-flex align-items-center">{user.email}</span>
-
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div className="d-flex">
-                                                                    <span className="pe-2 d-flex align-items-center">{user.phone}</span>
-
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div className="d-flex">
-                                                                    <span className="pe-2 d-flex align-items-center">{user.role}</span>
-
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div className="d-flex">
-                                                                    <span className="pe-2 d-flex align-items-center">{user.adress}</span>
-
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <button type="button" class="btn btn-success" onClick={(e) => Afficher(user._id)}>Details</button>
-                                                                <button type="button" class="btn btn-primary" onClick={(e) => Modifier(user._id)}>Edit</button>
-                                                                <button type="button" class="btn btn-danger" onClick={(e) => Supprimer(user._id)}>Delete</button>
-                                                            </td>
-
-                                                        </tr>
-                                                    ))}
-
-
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <a className="text-black font-13 d-block pt-2 pb-2 pb-lg-0 font-weight-bold ps-4" href="#">Show more</a>
-                                    </div>
                                 </div>
                             </div>
+
+
                         </div>
 
-
                     </div>
-
-                    <Footer />
-
                 </div>
-
-            </div>
-
-        </div >
-
+            </div >
+        </div>
     )
-
-
 }
 
-export default Users;
+export default DetailsCategorie

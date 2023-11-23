@@ -1,62 +1,74 @@
-import React from "react";
-import Footer from "./footer";
-import Navbar from "./navbar";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react";
-import UserService from "./services/UserService";
+import { startTransition, useEffect, useState } from "react";
+import EventService from "../../services/EventService";
+import Footer from "../Dashbord/footer";
+import Navbar from "../Dashbord/navbar";
+import { useNavigate, useLocation } from "react-router-dom";
+import LoginService from "../../services/LoginService";
 
 
-function Details() {
 
+function AddEvent() {
 
-    const location = useLocation()
-    const us = new UserService();
-    const navigate = useNavigate();
-
-    const [user, setUser] = useState("");
+    const [dispoList, setdispoList] = useState([]);
+    const [query1, setquery1] = useState("")
     const [id, setId] = useState("")
-    const [firstname, setfirstname] = useState("");
-    const [lastname, setlastname] = useState("");
-    const [email, setemail] = useState("");
-    const [cin, setcin] = useState("");
-    const [phone, setphone] = useState("");
-    const [photo, setphoto] = useState("");
-    const [role, setrole] = useState("");
+    const [x, setX] = useState("")
+    const navigate = useNavigate()
+    const ES = new EventService();
+    const CS = new LoginService();
+    const location = useLocation()
+    useEffect(() => {
+        setId(location.state.id)
+        ES.getAll().then((res) => { // Liste Deroulante get All Events
+
+            console.log("Liste des evenements ", res.data.data);
+            setdispoList(res.data.data);
+
+        })
+    }, [])
 
 
-    useEffect(() => {// Reexpliquer
-        console.log("ok id ", location.state.id);
-        setId(location.state.id);//??
-        getUserById(location.state.id);//?? name(x) name(saif)
-    }, []);
-    const getUserById = (id) => {
-        console.log("id", id);
-        if (id != null) {
-            us.findByid(id).then((res) => {
-                //
-                console.log("detailss", res.data.data);
-                if (res.data.data) {
-                    setUser(res.data.data);
-
-                    setfirstname(res.data.data.firstname);
-                    setlastname(res.data.data.lastname);
-                    setemail(res.data.data.email)
-                    setcin(res.data.data.cin);
-                    setphone(res.data.data.phone);
-                    setphoto(res.data.data.photo);
-                    setrole(res.data.data.role)
+    const SignInFunction = (e) => {
+        e.preventDefault();
 
 
+        const data = { "ListOfEvents": [x] }
 
-                }
 
-            })
-        }
+        CS.update(id, data).then((res) => {
 
-        //  else { navigate("/login") }
+        })
+        navigate("/events")
+
     }
 
+    const onChangeHandler = (e) => {
+        const index = e.target.selectedIndex;
+        const el = e.target.childNodes[index]
+        const option = el.getAttribute('id');
+        setquery1(e.target.value)
+        console.log("option", option)
+        setX(option)
+    }
+
+
+    const CreatePage = () => {
+        alert("Vers Create Page")
+        //navigation vers la page eventdaetail/id
+        navigate("/createUser")
+    }
+
+    const CreateCategorie = () => {
+        alert("Vers Create Create Categorie")
+        //navigation vers la page eventdaetail/id
+        navigate("/createCategorie")
+    }
+
+    const CreateEvent = () => {
+        alert("Vers Create Create Event")
+        //navigation vers la page eventdaetail/id
+        navigate("/createEvent")
+    }
 
     return (
 
@@ -65,11 +77,10 @@ function Details() {
 
 
             <Navbar />
-            <br></br>
 
             <div className="container-fluid page-body-wrapper">
 
-                <div id="settings-trigger"><i className="mdi mdi-settings"></i></div>
+            <div id="settings-trigger"><i className="mdi mdi-settings"></i></div>
                 <div id="theme-settings" className="settings-panel">
                     <i className="settings-close mdi mdi-close"></i>
                     <p className="settings-heading">SIDEBAR SKINS</p>
@@ -97,9 +108,8 @@ function Details() {
                             <span className="mdi mdi-chevron-double-left"></span>
                         </button>
                         <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                            <a className="navbar-brand brand-logo-mini" href="index.html">
-                                <img src="../assets/images/logo-mini.svg"
-                                    alt="logo" /></a>
+                            <a className="navbar-brand brand-logo-mini" href="index.html"><img src="../assets/images/logo-mini.svg"
+                                alt="logo" /></a>
                         </div>
                         <ul className="navbar-nav">
                             <li className="nav-item dropdown">
@@ -192,36 +202,29 @@ function Details() {
                             </li>
                         </ul>
                         <ul className="navbar-nav navbar-nav-right">
-                            <li className="nav-item nav-logout d-none d-md-block me-3">
-                                <a className="nav-link" href="#">Status</a>
+                            <li className="nav-item nav-logout d-none d-md-block me-3 ">
+                                <a className="nav-link" href="#">Dashbord Organisateur</a>
                             </li>
-                            <li className="nav-item nav-logout d-none d-md-block">
-                                <button className="btn btn-sm btn-danger">Trailing</button>
-                            </li>
+
                             <li className="nav-item nav-profile dropdown d-none d-md-block">
                                 <a className="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown"
                                     aria-expanded="false">
-                                    <div className="nav-profile-text">English </div>
+                                    <div className="nav-profile-text btn-danger">Compte </div>
                                 </a>
                                 <div className="dropdown-menu center navbar-dropdown" aria-labelledby="profileDropdown">
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-bl me-3"></i> French </a>
+                                    <a className="dropdown-item" onClick={(e) => profileFN(iduser)}>
+                                        <i className="mdi mdi-account"></i> Profile </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-cn me-3"></i> Chinese </a>
+                                    <a className="dropdown-item" onClick={(e) => settingFN(iduser)}>
+                                        <i className="mdi mdi-home-circle"></i> settings </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-de me-3"></i> German </a>
+                                    <a className="dropdown-item" onClick={(e) => logoutFN(iduser)}>
+                                        <i className="mdi mdi-account-key"></i> Logout </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-ru me-3"></i>Russian </a>
+
                                 </div>
                             </li>
-                            <li className="nav-item nav-logout d-none d-lg-block">
-                                <a className="nav-link" href="index.html">
-                                    <i className="mdi mdi-home-circle"></i>
-                                </a>
-                            </li>
+
                         </ul>
                         <button className="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
                             data-toggle="offcanvas">
@@ -229,38 +232,103 @@ function Details() {
                         </button>
                     </div>
                 </nav>
-                <br></br><br></br>
-                <br></br><br></br>
-                <br></br><br></br>
                 <div className="main-panel">
-                    <div class="row">
-                        <div class="col-lg-6 offset-3">
-                            <div class="card mb-5">
-                                <div class="card-body text-center">
-                                  
-                                 
-                                        
-                                           <img src={`http://localhost:3000/storages/${user.photo}`} alt="" /> 
-                                    <h5 class="my-3">{firstname}</h5>
-                                    <p class="text-muted mb-1">{lastname}</p>
-                                    <p class="text-muted mb-1">{email}</p>
-                                    <p class="text-muted mb-1">{cin}</p>
-                                    <p class="text-muted mb-1">{phone}</p>
-                                    <p class="text-muted mb-1">{role}</p>
+                    <div className="content-wrapper pb-0">
+                        <div className="page-header flex-wrap">
+                            <div className="header-left">
+                                <button className="btn btn-primary mb-2 mb-md-0 me-2" onClick={(e) => CreatePage()}> Create new User </button>
+                                <button className="btn btn-primary mb-2 mb-md-0 me-2" onClick={(e) => CreateCategorie()}> Create new Categorie </button>
+                                <button className="btn btn-primary mb-2 mb-md-0 me-2" onClick={(e) => CreateEvent()}> Create new Event </button>
 
-
-
-                                </div>
                             </div>
 
+                        </div>
+                        <br></br>
+                        <br></br>
+                        <br></br>
 
+
+
+
+
+
+                        <div className="row">
+
+                            <div className="col-xl-12 stretch-card grid-margin">
+                                <div className="contact-page section">
+                                    <div className="container">
+
+                                        <div className="col-lg-6">
+                                            <div className="right-content">
+                                                <div className="row">
+                                                    <div className="col-lg-12">
+                                                        <h1>Create category </h1>
+                                                        <br></br>
+                                                        <br></br>
+                                                        <form id="contact-form" action="" method="post">
+
+
+                                                            <div className="row" >
+
+
+                                                                <div className="col-lg-6">
+                                                                    <fieldset>
+
+
+                                                                        <label for="cars">Events:</label>
+
+
+
+                                                                        <select style={{ backgroundColor: "white", borderRadius: "12%" }} id="cars" onChange={e => onChangeHandler(e)} >
+                                                                            {dispoList.map((dispo) => (
+                                                                                <option id={dispo._id}> {dispo.name}</option>
+                                                                            ))}
+                                                                        </select>
+                                                                    </fieldset>
+
+
+                                                                </div>
+
+
+
+
+
+
+                                                                <div className="col-lg-12">
+                                                                    <fieldset>
+                                                                        <button onClick={(e) => SignInFunction(e)} type="submit" id="form-submit" className="orange-button"> Add Event</button>
+                                                                    </fieldset>
+                                                                </div>
+                                                            </div>
+
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
                         </div>
 
+
                     </div>
+
+                    <Footer />
+
                 </div>
-            </div >
-        </div>
+
+            </div>
+
+        </div >
+
     )
+
 }
 
-export default Details
+export default AddEvent

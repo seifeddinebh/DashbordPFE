@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 // import Menu from "./menu";
 // import Footer from "./footer";
 // import UserService from "../services/UserService";
-import UserService from "../src/services/UserService"
+import UserService from "../../services/UserService"
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Swal from "sweetalert2";

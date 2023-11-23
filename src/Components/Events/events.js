@@ -1,74 +1,87 @@
-import React from "react";
-import Footer from "./footer";
-import Navbar from "./navbar";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import Footer from "../Dashbord/footer";
+import Navbar from "../Dashbord/navbar";
+import EventService from "../../services/EventService"
+import { useNavigate } from "react-router-dom";
 
-import CategorieService from "./services/CategorieService";
+function Events() {
 
 
-function DetailsCategorie() {
-
-    const location = useLocation()
-    const CS = new CategorieService();
+    const ES = new EventService();
+    //const [services, setServices] = useState([])
+    const [events, setEvents] = useState([])
     const navigate = useNavigate();
 
-    const [categories, setCategories] = useState("");
-    const [id, setId] = useState("")
-    const [name, setname] = useState("");
-    const [description, setdescription] = useState("");
-    const [budget, setbudget] = useState("");
-    const [photo, setphoto] = useState("");
-  const [ListOfEvents,setListOfEvents] =useState([])
-
-
-    useEffect(() => {// Reexpliquer
-        console.log("ok id ", location.state.id);
-        setId(location.state.id);//??
-        getUserById(location.state.id);//?? name(x) name(saif)
-    }, []);
-    const getUserById = (id) => {
-        console.log("id", id);
-        if (id != null) {
-            CS.GetOne(id).then((res) => {
-                //
-                console.log("detailss", res.data.data);
-                if (res.data.data) {
-                    setCategories(res.data.data);
-
-                    setname(res.data.data.name);
-                    setdescription(res.data.data.description);
-                    setbudget(res.data.data.budget)
-                    setphoto(res.data.data.photo);
-                    setListOfEvents(res.data.data.ListOfEvents)
 
 
 
+    const CreatePage = () => {
+        alert("Vers Create Page")
+        //navigation vers la page eventdaetail/id
+        navigate("/createUser")
+    }
 
-                }
+    const CreateCategorie = () => {
+        alert("Vers Create Create Categorie")
+        //navigation vers la page eventdaetail/id
+        navigate("/createCategorie")
+    }
 
-            })
-        }
-
-        //  else { navigate("/login") }
+    const CreateEvent = () => {
+        alert("Vers Create Create Event")
+        //navigation vers la page eventdaetail/id
+        navigate("/createEvent")
     }
 
 
+    useEffect(() => {
 
+        AllEvents()
+
+    }, [])
+    const AllEvents = () => {
+        ES.getAll().then((res) => {
+
+            console.log("Liste des events ", res.data.data);
+            setEvents(res.data.data);
+
+        })
+    }
+
+    const detialFN = (id) => {
+        navigate("/afficheEvent/" + id, { state: { id: id } })
+    }
 
     return (
 
 
         <div className="container-scroller">
-
+            {/* <div className="row p-0 m-0 proBanner" id="proBanner">
+                <div className="col-md-12 p-0 m-0">
+                    <div className="card-body card-body-padding d-flex align-items-center justify-content-between">
+                        <div className="ps-lg-1">
+                            <div className="d-flex align-items-center justify-content-between">
+                                <p className="mb-0 font-weight-medium me-3 buy-now-text">Free 24/7 customer support, updates, and more with
+                                    this template!</p>
+                                <a href="https://www.bootstrapdash.com/product/plus-admin-template/?utm_source=organic&utm_medium=banner&utm_campaign=buynow_demo"
+                                    target="_blank" className="btn me-2 buy-now-btn border-0">Get Pro</a>
+                            </div>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-between">
+                            <a href="https://www.bootstrapdash.com/product/plus-admin-template/"><i
+                                className="mdi mdi-home me-3 text-white"></i></a>
+                            <button id="bannerClose" className="btn border-0 p-0">
+                                <i className="mdi mdi-close text-white me-0"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div> */}
 
             <Navbar />
-            <br></br>
 
             <div className="container-fluid page-body-wrapper">
-
-                <div id="settings-trigger"><i className="mdi mdi-settings"></i></div>
+            <div id="settings-trigger"><i className="mdi mdi-settings"></i></div>
                 <div id="theme-settings" className="settings-panel">
                     <i className="settings-close mdi mdi-close"></i>
                     <p className="settings-heading">SIDEBAR SKINS</p>
@@ -96,9 +109,8 @@ function DetailsCategorie() {
                             <span className="mdi mdi-chevron-double-left"></span>
                         </button>
                         <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                            <a className="navbar-brand brand-logo-mini" href="index.html">
-                                <img src="../assets/images/logo-mini.svg"
-                                    alt="logo" /></a>
+                            <a className="navbar-brand brand-logo-mini" href="index.html"><img src="../assets/images/logo-mini.svg"
+                                alt="logo" /></a>
                         </div>
                         <ul className="navbar-nav">
                             <li className="nav-item dropdown">
@@ -191,36 +203,29 @@ function DetailsCategorie() {
                             </li>
                         </ul>
                         <ul className="navbar-nav navbar-nav-right">
-                            <li className="nav-item nav-logout d-none d-md-block me-3">
-                                <a className="nav-link" href="#">Status</a>
+                            <li className="nav-item nav-logout d-none d-md-block me-3 ">
+                                <a className="nav-link" href="#">Dashbord Organisateur</a>
                             </li>
-                            <li className="nav-item nav-logout d-none d-md-block">
-                                <button className="btn btn-sm btn-danger">Trailing</button>
-                            </li>
+
                             <li className="nav-item nav-profile dropdown d-none d-md-block">
                                 <a className="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown"
                                     aria-expanded="false">
-                                    <div className="nav-profile-text">English </div>
+                                    <div className="nav-profile-text btn-danger">Compte </div>
                                 </a>
                                 <div className="dropdown-menu center navbar-dropdown" aria-labelledby="profileDropdown">
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-bl me-3"></i> French </a>
+                                    <a className="dropdown-item" onClick={(e) => profileFN(iduser)}>
+                                        <i className="mdi mdi-account"></i> Profile </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-cn me-3"></i> Chinese </a>
+                                    <a className="dropdown-item" onClick={(e) => settingFN(iduser)}>
+                                        <i className="mdi mdi-home-circle"></i> settings </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-de me-3"></i> German </a>
+                                    <a className="dropdown-item" onClick={(e) => logoutFN(iduser)}>
+                                        <i className="mdi mdi-account-key"></i> Logout </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-ru me-3"></i>Russian </a>
+
                                 </div>
                             </li>
-                            <li className="nav-item nav-logout d-none d-lg-block">
-                                <a className="nav-link" href="index.html">
-                                    <i className="mdi mdi-home-circle"></i>
-                                </a>
-                            </li>
+
                         </ul>
                         <button className="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
                             data-toggle="offcanvas">
@@ -228,39 +233,63 @@ function DetailsCategorie() {
                         </button>
                     </div>
                 </nav>
-                <br></br><br></br>
-                <br></br><br></br>
-                <br></br><br></br>
                 <div className="main-panel">
-                    <div class="row">
-                        <div class="col-lg-6 offset-3">
-                            <div class="card mb-5">
-                                <div class="card-body text-center">
+                    <div className="content-wrapper pb-0">
+                        <div className="page-header flex-wrap">
+                            <div className="header-left">
+                                <button className="btn btn-primary mb-2 mb-md-0 me-2" onClick={(e) => CreatePage()}> Create new User </button>
+                                <button className="btn btn-primary mb-2 mb-md-0 me-2" onClick={(e) => CreateCategorie()}> Create new Categorie </button>
+                                <button className="btn btn-primary mb-2 mb-md-0 me-2" onClick={(e) => CreateEvent()}> Create new Event </button>
 
-
-
-                                    <img src={`http://localhost:3000/storages/${categories.photo}`} alt="" />
-                                    <h5 class="my-3">{name}</h5>
-                                    <p class="text-muted mb-1">{budget}</p>
-                                    <p class="text-muted mb-1">{description}</p>
-                                    <p class="text-muted mb-1">{ListOfEvents.map((event)=>(
-                                        <li key={event._id}>{event.name}</li>
-                                    ))}</p>
-
-
-
-
-                                </div>
                             </div>
-
 
                         </div>
 
+
+
+                        {events.map((event) => (
+
+                            <div style={{ display: "inline-flex" }}>
+
+                                <div className="col-lg-12 stretch-card grid-margin">
+                                    <div className="card" onClick={e => { detialFN(event._id) }}>
+                                        <div className="card-body p-0">
+                                            <img src={`http://localhost:3000/storages/${event.photo}`} style={{ width: 350, height: 460 }} alt="" />
+                                        </div>
+                                        <div className="card-body px-4 text-dark">
+                                            <div className="d-flex justify-content-between">
+                                                <p className="text-muted font-13 mb-0">{event.name}</p>
+                                                <i className="mdi mdi-heart-outline"></i>
+                                            </div>
+                                            <h5 className="font-weight-semibold">{event.description}  </h5>
+                                            <div className="d-flex justify-content-between font-weight-semibold">
+                                                <p className="mb-0">
+                                                    <i className="mdi mdi-star star-color pe-1"></i>{event.localisation} (35)
+                                                </p>
+                                                <p className="mb-0">{event.budget}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+
+
+
+
                     </div>
+
+                    <Footer />
+
                 </div>
-            </div >
+
+            </div>
+
         </div>
+
     )
+
+
 }
 
-export default DetailsCategorie
+export default Events;

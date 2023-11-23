@@ -1,15 +1,14 @@
-
-import Swal from "sweetalert2";
-import Footer from "./footer";
-import Navbar from "./navbar";
-import React, { useState, useEffect } from "react";
-//import UserService from "./services/UserService";
+import React, { useEffect, useState } from "react";
+import Footer from "../Dashbord/footer";
+import Navbar from "../Dashbord/navbar";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import CategorieService from "./services/CategorieService";
-//import { Navbar } from "react-bootstrap";
+import CategorieService from "../../services/CategorieService";
+import EventService from "../../services/EventService";
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 
-function EditCategorie() {
+function CreateCategorie() {
+
 
     const [categories, setCategories] = useState("");
     const [id, setId] = useState("")
@@ -17,60 +16,66 @@ function EditCategorie() {
     const [description, setdescription] = useState("");
     const [budget, setbudget] = useState("");
     const [photo, setphoto] = useState("");
-
-
-
-
+    const [dispoList, setdispoList] = useState([]);
+    const [query1, setquery1] = useState("")
     const onFileChange = event => {
         setphoto(event.target.files[0]);
     };
 
-    const location = useLocation()
+    const navigate = useNavigate()
     const CS = new CategorieService();
-    const navigate = useNavigate();
-    useEffect(() => {
-        setId(location.state.id)
-        AfficheDetails(location.state.id)
-    }, [])
-    const AfficheDetails = (id) => {
-        console.log("id in update", id);
-        CS.GetOne(id).then((res) => {
-            //
-            console.log("in update file", res.data.data);
-            if (res.data.data) {
+    const ES = new EventService();
 
-                setname(res.data.data.name);
-                setbudget(res.data.data.budget);
-                setdescription(res.data.data.description);
-                setphoto(res.data.data.photo);
-
-            }
-
-        })
-    }
     const SignInFunction = (e) => {
-        console.log("photo",photo)
         e.preventDefault();
+
+
+        //alert(query1)
         const formData = new FormData();
         formData.append("name", name)
         formData.append("description", description)
         formData.append("budget", budget)
         formData.append("photo", photo)
+        //  formData.append("ListOfEvents", query1)
 
 
 
-        //
 
-        CS.UpdatePhoto(id, formData).then((res) => {
-            // console.log("Ok")
-            Swal.fire('The category is updated!');
 
+        CS.create(formData).then((res) => {
+            console.log(res.data.data)
         })
         navigate("/categories")
-
     }
 
+    useEffect(() => {
 
+        ES.getAll().then((res) => {
+
+            console.log("Liste des evenements ", res.data.data);
+            setdispoList(res.data.data);
+
+        })
+
+    }, [])
+
+    const CreatePage = () => {
+        alert("Vers Create Page")
+        //navigation vers la page eventdaetail/id
+        navigate("/createUser")
+    }
+
+    const CreateCategorie = () => {
+        alert("Vers Create Create Categorie")
+        //navigation vers la page eventdaetail/id
+        navigate("/createCategorie")
+    }
+
+    const CreateEvent = () => {
+        alert("Vers Create Create Event")
+        //navigation vers la page eventdaetail/id
+        navigate("/createEvent")
+    }
 
     return (
 
@@ -80,12 +85,9 @@ function EditCategorie() {
 
             <Navbar />
 
-
-
-
             <div className="container-fluid page-body-wrapper">
 
-                <div id="settings-trigger"><i className="mdi mdi-settings"></i></div>
+            <div id="settings-trigger"><i className="mdi mdi-settings"></i></div>
                 <div id="theme-settings" className="settings-panel">
                     <i className="settings-close mdi mdi-close"></i>
                     <p className="settings-heading">SIDEBAR SKINS</p>
@@ -207,36 +209,29 @@ function EditCategorie() {
                             </li>
                         </ul>
                         <ul className="navbar-nav navbar-nav-right">
-                            <li className="nav-item nav-logout d-none d-md-block me-3">
-                                <a className="nav-link" href="#">Status</a>
+                            <li className="nav-item nav-logout d-none d-md-block me-3 ">
+                                <a className="nav-link" href="#">Dashbord Organisateur</a>
                             </li>
-                            <li className="nav-item nav-logout d-none d-md-block">
-                                <button className="btn btn-sm btn-danger">Trailing</button>
-                            </li>
+
                             <li className="nav-item nav-profile dropdown d-none d-md-block">
                                 <a className="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown"
                                     aria-expanded="false">
-                                    <div className="nav-profile-text">English </div>
+                                    <div className="nav-profile-text btn-danger">Compte </div>
                                 </a>
                                 <div className="dropdown-menu center navbar-dropdown" aria-labelledby="profileDropdown">
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-bl me-3"></i> French </a>
+                                    <a className="dropdown-item" onClick={(e) => profileFN(iduser)}>
+                                        <i className="mdi mdi-account"></i> Profile </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-cn me-3"></i> Chinese </a>
+                                    <a className="dropdown-item" onClick={(e) => settingFN(iduser)}>
+                                        <i className="mdi mdi-home-circle"></i> settings </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-de me-3"></i> German </a>
+                                    <a className="dropdown-item" onClick={(e) => logoutFN(iduser)}>
+                                        <i className="mdi mdi-account-key"></i> Logout </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-ru me-3"></i>Russian </a>
+
                                 </div>
                             </li>
-                            <li className="nav-item nav-logout d-none d-lg-block">
-                                <a className="nav-link" href="index.html">
-                                    <i className="mdi mdi-home-circle"></i>
-                                </a>
-                            </li>
+
                         </ul>
                         <button className="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
                             data-toggle="offcanvas">
@@ -249,9 +244,10 @@ function EditCategorie() {
                     <div className="content-wrapper pb-0">
                         <div className="page-header flex-wrap">
                             <div className="header-left">
-                                <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new User </button>
-                                <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new Categorie </button>
-                                <button className="btn btn-primary mb-2 mb-md-0 me-2"> Create new Event </button>
+                                <button className="btn btn-primary mb-2 mb-md-0 me-2" onClick={(e) => CreatePage()}> Create new User </button>
+                                <button className="btn btn-primary mb-2 mb-md-0 me-2" onClick={(e) => CreateCategorie()}> Create new Categorie </button>
+                                <button className="btn btn-primary mb-2 mb-md-0 me-2" onClick={(e) => CreateEvent()}> Create new Event </button>
+
 
                             </div>
 
@@ -263,95 +259,128 @@ function EditCategorie() {
 
 
 
+
+
                         <div className="row">
 
-<div className="col-xl-12 stretch-card grid-margin">
-    <div className="contact-page section">
-        <div className="container">
+                            <div className="col-xl-12 stretch-card grid-margin">
+                                <div className="contact-page section">
+                                    <div className="container">
 
-            <div className="col-lg-6 offset-3">
-                <div className="right-content">
-                    <div className="row">
-                        <div className="col-lg-12">
-                            <h1>Create category </h1>
-                            <br></br>
-                            <br></br>
-                            <form id="contact-form" action="" method="post">
-                                {/* <div className="i-am-centered"> */}
+                                        <div className="col-lg-6 offset-3">
+                                            <div className="right-content">
+                                                <div className="row">
+                                                    <div className="col-lg-12">
+                                                        <h1>Create category </h1>
+                                                        <br></br>
+                                                        <br></br>
+                                                        <form id="contact-form" action="" method="post">
+                                                            {/* <div className="i-am-centered"> */}
 
-                                <div className="row" >
-                                    <div className="col-lg-6">
+                                                            <div className="row" >
+                                                                <div className="col-lg-6">
 
-                                        <div class="mb-3">
-                                            <label for="formFile" class="form-label">Name</label>
-                                            <input class="form-control" placeholder="name..." type="texte" id="formFile" value={name}
-                                                onChange={(e) => setname(e.target.value)} />
+                                                                    <div class="mb-3">
+                                                                        <label for="formFile" class="form-label">Name</label>
+                                                                        <input class="form-control" placeholder="name..." type="texte" id="formFile" value={name}
+                                                                            onChange={(e) => setname(e.target.value)} />
+                                                                    </div>
+                                                                </div>
+                                                                <br></br>
+                                                                <div className="col-lg-6">
+
+
+                                                                    <div class="mb-3">
+                                                                        <label for="formFile" class="form-label">Budget</label>
+                                                                        <input class="form-control" placeholder="Budget..." type="texte" id="formFile" value={budget}
+                                                                            onChange={(e) => setbudget(e.target.value)} />
+                                                                    </div>
+                                                                </div>
+                                                                <br></br>
+                                                                <div className="col-lg-6">
+
+                                                                    <div class="mb-3">
+                                                                        <label for="formFile" class="form-label">Description</label>
+                                                                        <input class="form-control" placeholder="Budget..." type="texte" id="formFile" value={description}
+                                                                            onChange={(e) => setdescription(e.target.value)} />
+                                                                    </div>
+                                                                </div>
+                                                                <br></br>
+
+
+
+                                                                {/* <br></br>
+
+                                <div className="col-lg-6">
+                                    <fieldset>
+
+                                        <input type="file" required="" onChange={onFileChange}
+
+
+                                        />
+                                    </fieldset>
+                                </div> */}
+
+
+
+
+                                                                <br></br>
+                                                                <br></br>
+
+                                                                <div className="col-lg-6">
+
+
+
+                                                                    <div class="mb-3">
+                                                                        <label for="formFile" class="form-label">Photo</label>
+                                                                        <input class="form-control" type="file" id="formFile" onChange={onFileChange} />
+                                                                    </div>
+                                                                </div>
+
+                                                                {/* <div className="col-lg-6">
+                                                                    <fieldset>
+
+
+                                                                        <label for="cars">Events:</label>
+
+
+
+                                                                        <select style={{ backgroundColor: "white", borderRadius: "12%" }} id="cars" onChange={e => setquery1(e.target.value)} >
+                                                                            {dispoList.map((dispo) => (
+                                                                                <option> {dispo.name}</option>
+                                                                            ))}
+                                                                        </select>
+                                                                    </fieldset>
+
+
+                                                                </div> */}
+
+
+
+
+
+
+                                                                <div className="col-lg-12">
+                                                                    <fieldset>
+                                                                        <button onClick={(e) => SignInFunction(e)} type="submit" id="form-submit" className="btn btn-primary"> Create</button>
+                                                                    </fieldset>
+                                                                </div>
+                                                            </div>
+                                                            {/* </div> */}
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <br></br>
-                                    <div className="col-lg-6">
 
-
-                                        <div class="mb-3">
-                                            <label for="formFile" class="form-label">Budget</label>
-                                            <input class="form-control" placeholder="Budget..." type="texte" id="formFile" value={budget}
-                                                onChange={(e) => setbudget(e.target.value)} />
-                                        </div>
-                                    </div>
-                                    <br></br>
-                                    <div className="col-lg-6">
-
-                                        <div class="mb-3">
-                                            <label for="formFile" class="form-label">Description</label>
-                                            <input class="form-control" placeholder="Budget..." type="texte" id="formFile" value={description}
-                                                onChange={(e) => setdescription(e.target.value)} />
-                                        </div>
-                                    </div>
-                                    <br></br>
-
-
-
-
-
-
-                                    <br></br>
-                                    <br></br>
-
-                                    <div className="col-lg-6">
-
-
-
-                                        <div class="mb-3">
-                                            <label for="formFile" class="form-label">Photo</label>
-                                            <input class="form-control" type="file" id="formFile" onChange={onFileChange} />
-                                        </div>
                                     </div>
 
-                                
-
-
-
-                                    <div className="col-lg-12">
-                                        <fieldset>
-                                            <button onClick={(e) => SignInFunction(e)} type="submit" id="form-submit" className="btn btn-primary"> Update</button>
-                                        </fieldset>
-                                    </div>
                                 </div>
-                                {/* </div> */}
-                            </form>
+
+
+
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-</div>
-</div>
 
 
                     </div>
@@ -365,6 +394,6 @@ function EditCategorie() {
         </div >
 
     )
-}
 
-export default EditCategorie 
+}
+export default CreateCategorie

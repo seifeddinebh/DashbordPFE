@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom"
 import { Link } from "react-router-dom";
-import UserService from "./services/UserService";
+import UserService from "../../services/UserService";
 
 function Navbar() {
     const [firstname, setfirstname] = useState("")

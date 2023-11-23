@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Footer from "./footer";
-import Navbar from "./navbar";
-import EventService from "./services/EventService"
+import Footer from "../Dashbord/footer";
+import Navbar from "../Dashbord/navbar";
+import EventService from "../../services/EventService"
 import { useNavigate } from "react-router-dom";
 
 function AfficheEventOrganizer() {
@@ -81,7 +81,7 @@ function AfficheEventOrganizer() {
 
             <div className="container-fluid page-body-wrapper">
 
-                <div id="settings-trigger"><i className="mdi mdi-settings"></i></div>
+            <div id="settings-trigger"><i className="mdi mdi-settings"></i></div>
                 <div id="theme-settings" className="settings-panel">
                     <i className="settings-close mdi mdi-close"></i>
                     <p className="settings-heading">SIDEBAR SKINS</p>
@@ -203,36 +203,29 @@ function AfficheEventOrganizer() {
                             </li>
                         </ul>
                         <ul className="navbar-nav navbar-nav-right">
-                            <li className="nav-item nav-logout d-none d-md-block me-3">
-                                <a className="nav-link" href="#">Status</a>
+                            <li className="nav-item nav-logout d-none d-md-block me-3 ">
+                                <a className="nav-link" href="#">Dashbord Organisateur</a>
                             </li>
-                            <li className="nav-item nav-logout d-none d-md-block">
-                                <button className="btn btn-sm btn-danger">Trailing</button>
-                            </li>
+
                             <li className="nav-item nav-profile dropdown d-none d-md-block">
                                 <a className="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown"
                                     aria-expanded="false">
-                                    <div className="nav-profile-text">English </div>
+                                    <div className="nav-profile-text btn-danger">Compte </div>
                                 </a>
                                 <div className="dropdown-menu center navbar-dropdown" aria-labelledby="profileDropdown">
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-bl me-3"></i> French </a>
+                                    <a className="dropdown-item" onClick={(e) => profileFN(iduser)}>
+                                        <i className="mdi mdi-account"></i> Profile </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-cn me-3"></i> Chinese </a>
+                                    <a className="dropdown-item" onClick={(e) => settingFN(iduser)}>
+                                        <i className="mdi mdi-home-circle"></i> settings </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-de me-3"></i> German </a>
+                                    <a className="dropdown-item" onClick={(e) => logoutFN(iduser)}>
+                                        <i className="mdi mdi-account-key"></i> Logout </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-ru me-3"></i>Russian </a>
+
                                 </div>
                             </li>
-                            <li className="nav-item nav-logout d-none d-lg-block">
-                                <a className="nav-link" href="index.html">
-                                    <i className="mdi mdi-home-circle"></i>
-                                </a>
-                            </li>
+
                         </ul>
                         <button className="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
                             data-toggle="offcanvas">
@@ -252,7 +245,7 @@ function AfficheEventOrganizer() {
 
                         </div>
 
-
+  <h1>Toutes les événemments</h1>
 
                         {events.map((event) => (
 
@@ -261,7 +254,7 @@ function AfficheEventOrganizer() {
                                 <div className="col-lg-12 stretch-card grid-margin">
                                     <div className="card" onClick={e => { detialFN(event._id) }}>
                                         <div className="card-body p-0">
-                                            <img src={`http://localhost:3000/storages/${event.photo}`} width="300" alt="" />
+                                            <img src={`http://localhost:3000/storages/${event.photo}`} style={{ width: 350, height: 460 }} alt="" />
                                         </div>
                                         <div className="card-body px-4 text-dark">
                                             <div className="d-flex justify-content-between">

@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import Footer from "./footer";
 import Navbar from "./navbar";
 import { Link, useNavigate } from "react-router-dom";
-import LoginService from "../src/services/LoginService"
+import LoginService from "../../services/LoginService"
 
 export function Home() {
-    const LS= new LoginService()
+    const LS = new LoginService()
 
     const navigate = useNavigate();
-    const [iduser,setiduser]=useState("")
+    const [iduser, setiduser] = useState("")
 
     useEffect(() => {
-setiduser(localStorage.getItem('resultID'))
+        setiduser(localStorage.getItem('resultID'))
 
     }, [])
 
@@ -89,7 +89,7 @@ setiduser(localStorage.getItem('resultID'))
 
             <div className="container-fluid page-body-wrapper">
 
-                <div id="settings-trigger"><i className="mdi mdi-settings"></i></div>
+            <div id="settings-trigger"><i className="mdi mdi-settings"></i></div>
                 <div id="theme-settings" className="settings-panel">
                     <i className="settings-close mdi mdi-close"></i>
                     <p className="settings-heading">SIDEBAR SKINS</p>
@@ -111,7 +111,7 @@ setiduser(localStorage.getItem('resultID'))
                     </div>
                 </div>
 
-              <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+                <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
                     <div className="navbar-menu-wrapper d-flex align-items-stretch">
                         <button className="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
                             <span className="mdi mdi-chevron-double-left"></span>
@@ -211,16 +211,14 @@ setiduser(localStorage.getItem('resultID'))
                             </li>
                         </ul>
                         <ul className="navbar-nav navbar-nav-right">
-                            <li className="nav-item nav-logout d-none d-md-block me-3">
+                            <li className="nav-item nav-logout d-none d-md-block me-3 ">
                                 <a className="nav-link" href="#">Dashbord Organisateur</a>
                             </li>
-                            <li className="nav-item nav-logout d-none d-md-block">
-                                <button className="btn btn-sm btn-danger">Trailing</button>
-                            </li>
+
                             <li className="nav-item nav-profile dropdown d-none d-md-block">
                                 <a className="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown"
                                     aria-expanded="false">
-                                    <div className="nav-profile-text">English </div>
+                                    <div className="nav-profile-text btn-danger">Compte </div>
                                 </a>
                                 <div className="dropdown-menu center navbar-dropdown" aria-labelledby="profileDropdown">
                                     <a className="dropdown-item" onClick={(e) => profileFN(iduser)}>
@@ -243,7 +241,6 @@ setiduser(localStorage.getItem('resultID'))
                         </button>
                     </div>
                 </nav>
-
 
                 <div className="main-panel">
                     <div className="content-wrapper pb-0">

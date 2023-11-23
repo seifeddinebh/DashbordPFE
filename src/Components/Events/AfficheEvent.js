@@ -1,73 +1,102 @@
+import React from "react";
+import Footer from "../Dashbord/footer";
+import Navbar from "../Dashbord/navbar";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
 
-import Footer from "./footer";
-import Navbar from "./navbar";
-import CategorieService from "../src/services/CategorieService"
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2"
-
-function Categories() {
-
-
-    const navigate = useNavigate()
+import CategorieService from "../../services/CategorieService";
+import EventService from "../../services/EventService";
+import Swal from "sweetalert2";
 
 
 
+function AfficheEvent() {
 
-    const CreatePage = () => {
-        alert("Vers Create Page")
-        //navigation vers la page eventdaetail/id
-        navigate("/createUser")
-    }
-
-    const CreateCategorie = () => {
-        alert("Vers Create Create Categorie")
-        //navigation vers la page eventdaetail/id
-        navigate("/createCategorie")
-    }
-
-    const CreateEvent = () => {
-        alert("Vers Create Create Event")
-        //navigation vers la page eventdaetail/id
-        navigate("/createEvent")
-    }
-
-
-    const CS = new CategorieService();
-    const [categories, setCategories] = useState([])
-
-    useEffect(() => {
-
-        AllCategories()
-
-    }, [])
-    const AllCategories = () => {
-        CS.getAll().then((res) => {
-
-            console.log("Liste des Categories ", res.data.data);
-            setCategories(res.data.data);
-
-        })
-    }
+    const location = useLocation()
+    //const CS = new CategorieService();
+    const ES = new EventService();
+    const navigate = useNavigate();
+    const [nomOrganisateur, setNomOrganisateur] = useState("pas d'organisateur")
+    const [events, setEvents] = useState("");
+    const [id, setId] = useState("")
+    const [name, setName] = useState("")
+    const [description, setDescription] = useState("")
+    const [photo, setPhoto] = useState("")
+    const [file, setFile] = useState("")
+    const [localisation, setlocalisation] = useState("")
+    const [periode, setPeriode] = useState("")
+    const [budgetevent, setBudgetevent] = useState("")
+    const [price, setPrice] = useState("")
+    const [equipement, setEquipement] = useState([])
+    const [tags, setTags] = useState([])
+    const [organizer, setOrganizer] = useState([])
+    const [category, setCategory] = useState([])
+    const [selectedOptions, setSelectedOptions] = useState();
+    // const [ListOfOrganizer,setListOfOrganizer]=useState([])
+    const onFileChange = event => {
+        setPhoto(events.target.files[0]);
+    };
 
 
+    useEffect(() => {// Reexpliquer
+        console.log("ok id ", location.state.id);
+        setId(location.state.id);//??
+        getEventById(location.state.id);//?? name(x) name(saif)
 
-    const Afficher = (id) => {
 
-        //navigation vers la page eventdaetail/id
-        navigate("/detailsCategorie/" + id, { state: { id: id } })
+    }, []);
+
+    const getEventById = (id) => {
+        console.log("id", id);
+        if (id != null) {
+            ES.GetOne(id).then((res) => {
+                //
+                console.log("detailss", res.data.data);
+                if (res.data.data) {
+                    setEvents(res.data.data);
+
+                    setName(res.data.data.name);
+                    setDescription(res.data.data.description);
+                    setBudgetevent(res.data.data.budgetevent)
+                    setPhoto(res.data.data.photo);
+                    setFile(res.data.data.file);
+                    setPeriode(res.data.data.periode);
+                    setBudgetevent(res.data.data.budgetevent)
+                    setPrice(res.data.data.price);
+                    setlocalisation(res.data.data.localisation)
+
+                    setEquipement(res.data.data.equipement);// Affichage ??
+                    setTags(res.data.data.tags)// Affichage ??
+
+                    if (res.data.data.organizer != null) {
+                        setOrganizer(res.data.data.organizer)
+                        setNomOrganisateur(res.data.data.organizer.firstname)
+                    }
+                    else {
+                        console.log("************************************no organiser*****************");
+                    }
+                    setCategory(res.data.data.category)
+
+
+
+
+
+
+
+                }
+
+            })
+        }
+
+        //  else { navigate("/login") }
     }
     const Modifier = (id) => {
-
-
-        navigate("/editCategorie/" + id, { state: { id: id } })
+        alert("Vers Create Modifier")
+        //navigation vers la page eventdaetail/id
+        navigate("/modifierEvent/" + id, { state: { id: id } })
     }
 
-    const AddEvent = (id) => {
-
-
-        navigate("/AddEvent/" + id, { state: { id: id } })
-    }
     const Supprimer = (id) => {
         console.log("ok supprimer", id);
         Swal.fire({
@@ -80,17 +109,20 @@ function Categories() {
             confirmButtonText: "Oui, supprimez-le!",
         }).then((result) => {
             if (result.isConfirmed) {
-                CS.remove(id).then((res) => {
+                ES.remove(id).then((res) => {
                     console.log(res.status);
                     console.log("resposne", res);
                     if (res.status === 200) {
-                        AllCategories()
+                        navigate(-1)
                         Swal.fire("Supprimé!", "Votre fichier a été supprimé.", "Succès");
                     }
                 });
             }
         });
     };
+
+
+
 
     return (
 
@@ -99,10 +131,11 @@ function Categories() {
 
 
             <Navbar />
+            <br></br>
 
             <div className="container-fluid page-body-wrapper">
 
-                <div id="settings-trigger"><i className="mdi mdi-settings"></i></div>
+            <div id="settings-trigger"><i className="mdi mdi-settings"></i></div>
                 <div id="theme-settings" className="settings-panel">
                     <i className="settings-close mdi mdi-close"></i>
                     <p className="settings-heading">SIDEBAR SKINS</p>
@@ -224,36 +257,29 @@ function Categories() {
                             </li>
                         </ul>
                         <ul className="navbar-nav navbar-nav-right">
-                            <li className="nav-item nav-logout d-none d-md-block me-3">
-                                <a className="nav-link" href="#">Status</a>
+                            <li className="nav-item nav-logout d-none d-md-block me-3 ">
+                                <a className="nav-link" href="#">Dashbord Organisateur</a>
                             </li>
-                            <li className="nav-item nav-logout d-none d-md-block">
-                                <button className="btn btn-sm btn-danger">Trailing</button>
-                            </li>
+
                             <li className="nav-item nav-profile dropdown d-none d-md-block">
                                 <a className="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown"
                                     aria-expanded="false">
-                                    <div className="nav-profile-text">English </div>
+                                    <div className="nav-profile-text btn-danger">Compte </div>
                                 </a>
                                 <div className="dropdown-menu center navbar-dropdown" aria-labelledby="profileDropdown">
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-bl me-3"></i> French </a>
+                                    <a className="dropdown-item" onClick={(e) => profileFN(iduser)}>
+                                        <i className="mdi mdi-account"></i> Profile </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-cn me-3"></i> Chinese </a>
+                                    <a className="dropdown-item" onClick={(e) => settingFN(iduser)}>
+                                        <i className="mdi mdi-home-circle"></i> settings </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-de me-3"></i> German </a>
+                                    <a className="dropdown-item" onClick={(e) => logoutFN(iduser)}>
+                                        <i className="mdi mdi-account-key"></i> Logout </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="flag-icon flag-icon-ru me-3"></i>Russian </a>
+
                                 </div>
                             </li>
-                            <li className="nav-item nav-logout d-none d-lg-block">
-                                <a className="nav-link" href="index.html">
-                                    <i className="mdi mdi-home-circle"></i>
-                                </a>
-                            </li>
+
                         </ul>
                         <button className="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
                             data-toggle="offcanvas">
@@ -261,104 +287,65 @@ function Categories() {
                         </button>
                     </div>
                 </nav>
-
+                <br></br><br></br>
+                <br></br><br></br>
+                <br></br><br></br>
                 <div className="main-panel">
-                    <div className="content-wrapper pb-0">
-                        <div className="page-header flex-wrap">
-                            <div className="header-left">
-                                <button className="btn btn-primary mb-2 mb-md-0 me-2" onClick={(e) => CreatePage()}> Create new User </button>
-                                <button className="btn btn-primary mb-2 mb-md-0 me-2" onClick={(e) => CreateCategorie()}> Create new Categorie </button>
-                                <button className="btn btn-primary mb-2 mb-md-0 me-2" onClick={(e) => CreateEvent()}> Create new Event </button>
-
-
-                            </div>
-
-                        </div>
-                        <br></br>
-                        <br></br>
-                        <br></br>
+                    <div class="row">
+                        <div class="col-lg-6 offset-3">
+                            <div class="card mb-5">
+                                <div class="card-body text-center">
 
 
 
+                                    <img src={`http://localhost:3000/storages/${events.photo}`} alt="" />
+                                    <h5 class="my-3">{name}</h5>
+                                    <p class="text-muted mb-1">Budget :{budgetevent}</p>
+                                    <p class="text-muted mb-1">desc :{description}</p>
+
+                                    <p class="text-muted mb-1">localisation:{localisation}</p>
+                                    <p class="text-muted mb-1">Periode :{periode}</p>
 
 
 
-                        <div className="row">
+                                    <p class="text-muted mb-1">List des Equipements{equipement.map((Eqp) => (
+                                        <li key={Eqp._id}> {Eqp}</li>
+                                    ))}</p>
 
-                            <div className="col-xl-12 stretch-card grid-margin">
-                                <div className="card">
-                                    <div className="card-body pb-0">
-                                        <h4 className="card-title mb-0">Financial management review</h4>
-                                    </div>
-                                    <div className="card-body p-0">
-                                        <div className="table-responsive">
-                                            <table className="table custom-table text-dark">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Name</th>
-                                                        <th>Budget</th>
-                                                        <th>Description</th>
-                                                        <th>Photo</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
+                                    <p class="text-muted mb-1"> List Des Tags{tags.map((Tags) => (
+                                        <li key={Tags._id}> {Tags}</li>
+                                    ))}</p>
 
-                                                    {categories.map((categorie) => (
-                                                        <tr>
-                                                            <td>
-                                                                {/* <img src="../assets/images/faces/face2.jpg" className="me-2" alt="image" /> Jacob Jensen */}
-                                                                <img src={`http://localhost:3000/storages/${categorie.photo}`} alt="" />{categorie.name}
-                                                            </td>
-                                                            <td>
-                                                                <div className="d-flex">
-                                                                    <span className="pe-2 d-flex align-items-center">{categorie.budget}</span>
 
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div className="d-flex">
-                                                                    <span className="pe-2 d-flex align-items-center">{categorie.description}</span>
+                                    <p class="text-muted mb-1">
+                                        Organizer: {nomOrganisateur}
+                                    </p>
+                                    <p class="text-muted mb-1">
+                                        Categorie: {category.name}
+                                    </p>
 
-                                                                </div>
-                                                            </td>
-                                                            {/* <td>
-                                                                <div className="d-flex">
-                                                                    <span className="pe-2 d-flex align-items-center">{categorie.budget}</span>
 
-                                                                </div>
-                                                            </td> */}
-                                                            <td>
-                                                                <button type="button" class="btn btn-success" onClick={(e) => Afficher(categorie._id)}>Details</button>
-                                                                <button type="button" class="btn btn-primary" onClick={(e) => Modifier(categorie._id)}>Edit</button>
-                                                                <button type="button" class="btn btn-danger" onClick={(e) => Supprimer(categorie._id)}>Delete</button>
-                                                                <button type="button" class="btn btn-danger" onClick={(e) => AddEvent(categorie._id)}>Add Event</button>
-                                                            </td>
-                                                        </tr>
 
-                                                    ))}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <a className="text-black font-13 d-block pt-2 pb-2 pb-lg-0 font-weight-bold ps-4" href="#">Show more</a>
-                                    </div>
+
+
                                 </div>
+                                <br></br>
+                                <button type="button" class="btn btn-danger" onClick={(e) => Supprimer(id)}>Delete</button>
+                                <br></br>
+                                <button type="button" class="btn btn-primary" onClick={(e) => Modifier(id)}>UpDate</button>
+                                <br></br>
+                                <button type="button" class="btn btn-success" onClick={(e) => navigate("/events")}>Back</button>
                             </div>
-                        </div>
 
+
+                        </div>
 
                     </div>
-
-                    <Footer />
-
                 </div>
 
-            </div>
-
-        </div >
-
+            </div >
+        </div>
     )
-
-
 }
 
-export default Categories;
+export default AfficheEvent

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import UserService from "./services/UserService";
+import UserService from "../../services/UserService";
 import { useNavigate } from "react-router-dom";
 
 
@@ -63,7 +63,7 @@ function Register() {
         console.log(formData)
 
         US.create(formData).then((res) => {
-        console.log(res.data)
+            console.log(res.data)
         })
         navigate("/")
     }
