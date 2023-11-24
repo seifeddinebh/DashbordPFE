@@ -88,6 +88,7 @@ function DashboardOrganisateur() {
     const detialFN = (id) => {
         navigate("/AfficheDetailsEventOrganizer/" + id, { state: { id: id } })
     }
+    
     return (
 
 

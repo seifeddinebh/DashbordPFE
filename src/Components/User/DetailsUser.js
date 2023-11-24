@@ -60,6 +60,32 @@ function RegisterDetails() {
 
 
     }
+    const logoutFN = (id) => {
+
+        alert("Logout ")
+        LS.Logout(id).then((res) => {
+            console.log("result ", res)
+            localStorage.removeItem("resultID");
+            localStorage.removeItem("resultToken");
+            console.log("id apres logout", localStorage.getItem("resultID"))
+            console.log("token apres logout", localStorage.getItem("resultToken"))
+            navigate("/")
+
+        })
+    }
+
+    const settingFN = (id) => {
+
+        navigate("/UpDateProfile/" + id, { state: { id: id } })
+    }
+    const profileFN = (id) => {
+
+        navigate("/registerDetails/" + id, { state: { id: id } })
+
+
+
+
+    }
 
     return (
 
@@ -200,13 +226,13 @@ function RegisterDetails() {
                                     <div className="nav-profile-text btn-danger">Compte </div>
                                 </a>
                                 <div className="dropdown-menu center navbar-dropdown" aria-labelledby="profileDropdown">
-                                    <a className="dropdown-item" onClick={(e) => profileFN(iduser)}>
+                                    <a className="dropdown-item" onClick={(e) => profileFN(myid)}>
                                         <i className="mdi mdi-account"></i> Profile </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" onClick={(e) => settingFN(iduser)}>
+                                    <a className="dropdown-item" onClick={(e) => settingFN(myid)}>
                                         <i className="mdi mdi-home-circle"></i> settings </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" onClick={(e) => logoutFN(iduser)}>
+                                    <a className="dropdown-item" onClick={(e) => logoutFN(myid)}>
                                         <i className="mdi mdi-account-key"></i> Logout </a>
                                     <div className="dropdown-divider"></div>
 

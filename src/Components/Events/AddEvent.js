@@ -70,6 +70,32 @@ function AddEvent() {
         navigate("/createEvent")
     }
 
+    const logoutFN = (id) => {
+
+        alert("Logout ")
+        LS.Logout(id).then((res) => {
+            console.log("result ", res)
+            localStorage.removeItem("resultID");
+            localStorage.removeItem("resultToken");
+            console.log("id apres logout", localStorage.getItem("resultID"))
+            console.log("token apres logout", localStorage.getItem("resultToken"))
+            navigate("/")
+
+        })
+    }
+
+    const settingFN = (id) => {
+
+        navigate("/UpDateProfile/" + id, { state: { id: id } })
+    }
+    const profileFN = (id) => {
+
+        navigate("/registerDetails/" + id, { state: { id: id } })
+
+
+
+
+    }
     return (
 
 
